@@ -12,6 +12,7 @@ import { StatsTicker } from "@/components/StatsTicker";
 import { EngineeringSection } from "@/components/EngineeringSection";
 import { CompatibilityMatrix } from "@/components/CompatibilityMatrix";
 import { WorkshopSpotlight } from "@/components/WorkshopSpotlight";
+import { EnterpriseShowcase } from "@/components/EnterpriseShowcase";
 import { Testimonials } from "@/components/Testimonials";
 import { CtaBanner } from "@/components/CtaBanner";
 import { Footer } from "@/components/Footer";
@@ -71,6 +72,8 @@ export default function Home() {
         <EngineeringSection />
         <CompatibilityMatrix />
         <WorkshopSpotlight />
+        {/* PHYSICAL STORE HEADQUARTERS & NEXOCELL BATTERY DISTRIBUTION */}
+        <EnterpriseShowcase onOpenQuote={handleOpenQuote} />
         <Testimonials />
 
         {/* SECTION 6: High-Contrast Dark CTA Banner with Orange Action Button */}
