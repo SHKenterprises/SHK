@@ -33,7 +33,7 @@ export function EnterpriseShowcase({ onOpenQuote }: EnterpriseShowcaseProps = {}
               <div className="shk-ref-logo-box">
                 <img
                   src="/images/logos/shk_logo.png"
-                  alt="SHK Enterprises Logo"
+                  alt="S.H.K ENTERPRISES Logo"
                   className="shk-ref-shk-logo-img"
                   loading="eager"
                 />
@@ -401,7 +401,7 @@ export function EnterpriseShowcase({ onOpenQuote }: EnterpriseShowcaseProps = {}
           {/* Right: Green WhatsApp & Orange Call Button */}
           <div className="shk-ref-contact-right">
             <a
-              href="https://wa.me/919972455179?text=Hello%20SHK%20Enterprises%2C%20I%20am%20inquiring%20about%20Engine%20Spare%20Parts%20and%20Nexocell%20Batteries"
+              href="https://wa.me/919972455179?text=Hello%20S.H.K%20ENTERPRISES%2C%20I%20am%20inquiring%20about%20Engine%20Spare%20Parts%20and%20Nexocell%20Batteries"
               target="_blank"
               rel="noopener noreferrer"
               className="shk-ref-btn-whatsapp"

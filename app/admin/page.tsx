@@ -852,7 +852,7 @@ export default function AdminDashboardPage() {
           {!isSidebarCollapsed && (
             <div>
               <div style={{ fontSize: "1.05rem", fontWeight: 900, letterSpacing: "-0.01em", lineHeight: 1 }}>
-                SHK<span style={{ color: "var(--primary)" }}>AUTO</span>
+                S.H.K<span style={{ color: "var(--primary)" }}> ENTERPRISES</span>
               </div>
               <div style={{ fontSize: "0.62rem", color: "var(--primary)", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "3px" }}>
                 ADMIN PANEL
@@ -2565,7 +2565,7 @@ export default function AdminDashboardPage() {
                         </td>
                         <td style={{ padding: "16px 20px", textAlign: "right" }}>
                           <a
-                            href={`https://wa.me/${q.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hello ${q.name}, regards from SHK Auto. Here is your wholesale rate quote for ${q.parts}.`)}`}
+                            href={`https://wa.me/${q.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hello ${q.name}, regards from S.H.K ENTERPRISES. Here is your wholesale rate quote for ${q.parts}.`)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ backgroundColor: "#10b981", color: "#ffffff", padding: "6px 12px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 700, textDecoration: "none", display: "inline-block" }}

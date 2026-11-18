@@ -137,7 +137,7 @@ export default function AdminLoginPage() {
             </div>
             <div style={{ textAlign: "left" }}>
               <div style={{ fontSize: "1.35rem", fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1 }}>
-                SHK<span style={{ color: "var(--primary)" }}>AUTO</span>
+                S.H.K<span style={{ color: "var(--primary)" }}> ENTERPRISES</span>
               </div>
               <div style={{ fontSize: "0.68rem", color: "#94a3b8", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "3px" }}>
                 Admin Control Portal

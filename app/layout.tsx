@@ -8,7 +8,7 @@ import { AuthModal } from "@/components/AuthModal";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://shkauto.com"),
-  title: "SHK Auto | E-Commerce Store for Batteries & Precision Engine Spare Parts",
+  title: "S.H.K ENTERPRISES | E-Commerce Store for Batteries & Precision Engine Spare Parts",
   description:
     "Order genuine Nexcolle™ High-Performance Two-Wheeler Batteries & FUJI™ Precision Engine Spares online. Direct pan-India dispatch and wholesale trade pricing.",
   icons: {

@@ -21,7 +21,7 @@ export default function ContactPage() {
     e.preventDefault();
 
     const formattedMessage =
-      "Hello SHK Auto!%0A%0A*New Website Inquiry:*%0A" +
+      "Hello S.H.K ENTERPRISES!%0A%0A*New Website Inquiry:*%0A" +
       "- *Name/Garage:* " +
       encodeURIComponent(name.trim()) +
       "%0A" +
@@ -60,7 +60,7 @@ export default function ContactPage() {
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
             <span className="pill-tag">Trade &amp; Logistics Desk</span>
             <h1 style={{ fontSize: "2.2rem", fontWeight: 900, color: "var(--text-main)", marginTop: "8px" }}>
-              Get in Touch with SHK Auto
+              Get in Touch with S.H.K ENTERPRISES
             </h1>
             <p style={{ color: "var(--text-muted)", fontSize: "1rem", maxWidth: "600px", margin: "8px auto 0 auto" }}>
               Direct contact for workshop wholesale supply, dealership applications, order dispatch tracking, and technical inquiries.

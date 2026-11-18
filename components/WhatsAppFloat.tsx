@@ -4,7 +4,7 @@ export function WhatsAppFloat() {
   return (
     <a
       className="whatsapp-float"
-      href="https://wa.me/919876543210?text=Hello%20SHK%20Auto%2C%20I%20am%20interested%20in%20your%20products"
+      href="https://wa.me/919876543210?text=Hello%20S.H.K%20ENTERPRISES%2C%20I%20am%20interested%20in%20your%20products"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp Quick Chat"

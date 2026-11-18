@@ -28,7 +28,7 @@ export function Footer({ onSelectCategory }: FooterProps) {
               <div className="logo-badge">S</div>
               <div className="logo-text">
                 <div className="logo-title" style={{ color: "#fff" }}>
-                  SHK<span style={{ color: "var(--primary)" }}>AUTO</span>
+                  S.H.K<span style={{ color: "var(--primary)" }}> ENTERPRISES</span>
                 </div>
                 <div className="logo-sub">Precision Automotive Spares</div>
               </div>
@@ -185,10 +185,10 @@ export function Footer({ onSelectCategory }: FooterProps) {
         <div className="footer-bottom">
           <div className="container">
             <div>
-              &copy; <span>{currentYear}</span> SHK Auto. All rights reserved.
+              &copy; <span>{currentYear}</span> S.H.K ENTERPRISES. All rights reserved.
             </div>
             <div>
-              Nexcolle&trade; &amp; FUJI&trade; are registered trademarks distributed by SHK Auto.
+              Nexcolle&trade; &amp; FUJI&trade; are registered trademarks distributed by S.H.K ENTERPRISES.
             </div>
           </div>
         </div>

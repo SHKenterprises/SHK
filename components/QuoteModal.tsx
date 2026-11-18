@@ -52,7 +52,7 @@ export function QuoteModal({
     e.preventDefault();
 
     const message =
-      "Hello SHK Auto!%0A%0A*New Inquiry Details:*%0A" +
+      "Hello S.H.K ENTERPRISES!%0A%0A*New Inquiry Details:*%0A" +
       "- *Name/Garage:* " +
       encodeURIComponent(name.trim()) +
       "%0A" +

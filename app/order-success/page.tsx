@@ -290,7 +290,7 @@ function OrderSuccessContent() {
         {/* Action Buttons */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", justifyContent: "center" }}>
           <a
-            href={`https://wa.me/919876543210?text=Hello%20SHK%20Auto!%20I%20have%20placed%20order%20${orderId}%20for%20Rs.%20${total}.%20Please%20share%20tracking%20airway%20bill.`}
+            href={`https://wa.me/919876543210?text=Hello%20S.H.K%20ENTERPRISES!%20I%20have%20placed%20order%20${orderId}%20for%20Rs.%20${total}.%20Please%20share%20tracking%20airway%20bill.`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"

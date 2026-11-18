@@ -558,7 +558,7 @@ export function CartDrawer() {
                   const itemsList = items
                     .map((i) => `• ${i.product.title} (x${i.quantity}) = ₹${(i.product.price * i.quantity).toLocaleString("en-IN")}`)
                     .join("%0A");
-                  const msg = `Hello SHK Auto!%0A%0AI want to place an order from your website:%0A${itemsList}%0A%0A*Total: ₹${grandTotal.toLocaleString("en-IN")}*%0APlease send bank UPI details / invoice.`;
+                  const msg = `Hello S.H.K ENTERPRISES!%0A%0AI want to place an order from your website:%0A${itemsList}%0A%0A*Total: ₹${grandTotal.toLocaleString("en-IN")}*%0APlease send bank UPI details / invoice.`;
                   window.open(`https://wa.me/919876543210?text=${msg}`, "_blank");
                 }}
                 className="btn btn-outline"

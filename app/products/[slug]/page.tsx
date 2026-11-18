@@ -21,12 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: "Product Not Found | SHK Auto",
+      title: "Product Not Found | S.H.K ENTERPRISES",
     };
   }
 
   return {
-    title: `${product.title} - Price ₹${product.price} | SHK Auto`,
+    title: `${product.title} - Price ₹${product.price} | S.H.K ENTERPRISES`,
     description: product.description,
     openGraph: {
       title: product.title,

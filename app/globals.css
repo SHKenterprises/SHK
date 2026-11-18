@@ -4673,3 +4673,34 @@
     padding: 4px 10px;
   }
 }
+/* ==========================================================
+   BRAND WORDMARK: "S.H.K ENTERPRISES" (longer name, keep on one line)
+   ========================================================== */
+.logo-title {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .header .logo-title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .header .logo {
+    gap: 8px;
+  }
+  .header .logo-badge {
+    width: 36px;
+    height: 36px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+  }
+  .header .logo-title {
+    font-size: 0.98rem;
+  }
+  .header .logo-sub {
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+  }
+}

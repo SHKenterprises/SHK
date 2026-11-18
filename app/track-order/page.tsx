@@ -305,7 +305,7 @@ function TrackOrderContent() {
               </div>
 
               <a
-                href={`https://wa.me/919876543210?text=Hello%20SHK%20Auto%20Logistics%2C%20please%20share%20latest%20AWB%20courier%20status%20for%20order%20${orderData.orderId}`}
+                href={`https://wa.me/919876543210?text=Hello%20S.H.K%20ENTERPRISES%20Logistics%2C%20please%20share%20latest%20AWB%20courier%20status%20for%20order%20${orderData.orderId}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-outline btn-sm"

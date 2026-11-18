@@ -81,7 +81,7 @@ export default function BrandsPage() {
                 World-Class Spares Built By Industry Specialists
               </h1>
               <p style={{ color: "#94a3b8", fontSize: "1.05rem", lineHeight: 1.6, marginTop: "12px" }}>
-                SHK Auto partners directly with <strong>Nexcolle™</strong> and <strong>FUJI™</strong> factories to deliver genuine, traceable motorcycle components engineered for extreme Indian road and heat conditions.
+                S.H.K ENTERPRISES partners directly with <strong>Nexcolle™</strong> and <strong>FUJI™</strong> factories to deliver genuine, traceable motorcycle components engineered for extreme Indian road and heat conditions.
               </p>
             </div>
           </div>

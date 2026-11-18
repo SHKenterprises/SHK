@@ -85,7 +85,7 @@ export function CtaBanner({ onOpenQuote }: CtaBannerProps) {
             </button>
             <a
               className="btn btn-ghost-white"
-              href="https://wa.me/919876543210?text=Hello%20SHK%20Auto%2C%20I%20want%20to%20inquire%20about%20bulk%20wholesale%20pricing"
+              href="https://wa.me/919876543210?text=Hello%20S.H.K%20ENTERPRISES%2C%20I%20want%20to%20inquire%20about%20bulk%20wholesale%20pricing"
               target="_blank"
               rel="noopener noreferrer"
               style={{

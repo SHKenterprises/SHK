@@ -19,7 +19,7 @@ const REVIEWS: Review[] = [
     stars: 5,
     badge: "FUJI™ Cylinder Liners",
     quote:
-      "We rebuild around 25 to 30 motorcycle engines every month. Ever since switching to FUJI cylinder liners and pistons from SHK Auto, our rework rate dropped to virtually zero. No bore seizing, no oil burning.",
+      "We rebuild around 25 to 30 motorcycle engines every month. Ever since switching to FUJI cylinder liners and pistons from S.H.K ENTERPRISES, our rework rate dropped to virtually zero. No bore seizing, no oil burning.",
     initials: "MK",
     avatarBg: "linear-gradient(135deg, #1e293b, #0f172a)",
     name: "Mahesh Kumar",
@@ -41,7 +41,7 @@ const REVIEWS: Review[] = [
     stars: 5,
     badge: "Wholesale Dispatches",
     quote:
-      "Dispatches are always punctual. When a customer's bike is disassembled in the bay, you cannot wait a week for parts. SHK Auto delivers within 24 to 48 hours with correct OEM tolerances every single time.",
+      "Dispatches are always punctual. When a customer's bike is disassembled in the bay, you cannot wait a week for parts. S.H.K ENTERPRISES delivers within 24 to 48 hours with correct OEM tolerances every single time.",
     initials: "AS",
     avatarBg: "linear-gradient(135deg, #334155, #1e293b)",
     name: "Amritpal Singh",
@@ -74,7 +74,7 @@ const REVIEWS: Review[] = [
     stars: 5,
     badge: "Centrifugal Cylinder Liners",
     quote:
-      "Centrifugal cast iron liners from SHK have zero porosity and exact roundness right out of the box. Cuts our lathe and diamond-honing cycle time in half with flawless compression retention.",
+      "Centrifugal cast iron liners from S.H.K ENTERPRISES have zero porosity and exact roundness right out of the box. Cuts our lathe and diamond-honing cycle time in half with flawless compression retention.",
     initials: "GD",
     avatarBg: "linear-gradient(135deg, #475569, #1e293b)",
     name: "Gurpreet Dhillon",

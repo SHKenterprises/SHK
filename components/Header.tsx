@@ -50,11 +50,11 @@ export function Header({ onOpenQuote }: HeaderProps) {
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="container">
-        <Link href="/" className="logo" aria-label="SHK Auto Homepage">
+        <Link href="/" className="logo" aria-label="S.H.K ENTERPRISES Homepage">
           <div className="logo-badge">S</div>
           <div className="logo-text">
             <div className="logo-title">
-              SHK<span>AUTO</span>
+              S.H.K<span> ENTERPRISES</span>
             </div>
             <div className="logo-sub">Batteries &amp; Engine Spares</div>
           </div>

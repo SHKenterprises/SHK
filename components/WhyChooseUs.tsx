@@ -31,7 +31,7 @@ export function WhyChooseUs() {
         <div className="why-choose-us-grid">
           {/* Left Column matching NEDEN BİZ? */}
           <div className="why-choose-us-left">
-            <span className="kicker-pill">WHY CHOOSE SHK AUTO</span>
+            <span className="kicker-pill">WHY CHOOSE S.H.K ENTERPRISES</span>
             <h2>Engineering Expertise That Mechanics Depend On</h2>
           </div>
 

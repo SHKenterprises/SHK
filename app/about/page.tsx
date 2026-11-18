@@ -10,9 +10,9 @@ import { BrandPillars } from "@/components/BrandPillars";
 import { FaqSection } from "@/components/FaqSection";
 
 export const metadata: Metadata = {
-  title: "About Us | SHK Auto - India's Trusted 2-Wheeler Spares & Battery Distributor",
+  title: "About Us | S.H.K ENTERPRISES - India's Trusted 2-Wheeler Spares & Battery Distributor",
   description:
-    "Learn about SHK Auto, authorized distributor of Nexcolle™ High-Performance Batteries and FUJI™ Precision Engine Spares across India. Delivering OEM tolerances and reliable supply.",
+    "Learn about S.H.K ENTERPRISES, authorized distributor of Nexcolle™ High-Performance Batteries and FUJI™ Precision Engine Spares across India. Delivering OEM tolerances and reliable supply.",
 };
 
 export default function AboutPage() {
@@ -36,7 +36,7 @@ export default function AboutPage() {
         >
           <div className="container" style={{ position: "relative", zIndex: 1, maxWidth: "980px", textAlign: "center" }}>
             <span className="pill-tag dark" style={{ margin: "0 auto 16px auto" }}>
-              <Icon name="bolt" style={{ color: "var(--primary-light)" }} /> The Story Behind SHK Auto
+              <Icon name="bolt" style={{ color: "var(--primary-light)" }} /> The Story Behind S.H.K ENTERPRISES
             </span>
             <h1
               className="notranslate"
@@ -53,7 +53,7 @@ export default function AboutPage() {
               <span className="gradient-text">India&apos;s Two-Wheeler Backbone</span>
             </h1>
             <p style={{ fontSize: "1.1rem", color: "#94a3b8", lineHeight: 1.7, maxWidth: "720px", margin: "0 auto" }}>
-              Founded with a mission to eliminate roadside breakdown risks, SHK Auto is the authorized national distributor for <strong>Nexcolle&trade;</strong> high-crank batteries and <strong>FUJI&trade;</strong> internal engine spares.
+              Founded with a mission to eliminate roadside breakdown risks, S.H.K ENTERPRISES is the authorized national distributor for <strong>Nexcolle&trade;</strong> high-crank batteries and <strong>FUJI&trade;</strong> internal engine spares.
             </p>
           </div>
         </section>
@@ -149,7 +149,7 @@ export default function AboutPage() {
                   Every mechanic in India knows the frustration of replacing a cylinder liner or piston only to face engine seizure, compression blow-by, or excessive oil burning within months.
                 </p>
                 <p style={{ fontSize: "1rem", color: "#94a3b8", lineHeight: 1.75, marginBottom: "28px" }}>
-                  SHK Auto bridges this gap by directly distributing precision-manufactured parts crafted to strict Japanese metallurgy standards (<strong style={{ color: "#ffffff" }}>FUJI</strong>) and hermetically sealed maintenance-free calcium alloy battery tech (<strong style={{ color: "#ffffff" }}>Nexcolle</strong>).
+                  S.H.K ENTERPRISES bridges this gap by directly distributing precision-manufactured parts crafted to strict Japanese metallurgy standards (<strong style={{ color: "#ffffff" }}>FUJI</strong>) and hermetically sealed maintenance-free calcium alloy battery tech (<strong style={{ color: "#ffffff" }}>Nexcolle</strong>).
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
@@ -193,7 +193,7 @@ export default function AboutPage() {
               >
                 <img
                   src="/images/workshop.jpg"
-                  alt="SHK Auto Distribution Workshop"
+                  alt="S.H.K ENTERPRISES Distribution Workshop"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>

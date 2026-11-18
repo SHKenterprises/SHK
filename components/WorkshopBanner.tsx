@@ -14,7 +14,7 @@ export function WorkshopBanner({ onOpenQuote }: WorkshopBannerProps) {
             <span className="pill-tag dark">Dealer &amp; Garage Partnership</span>
             <h2>Stock Genuine Parts. Boost Your Workshop Reputation.</h2>
             <p>
-              Are you a two-wheeler workshop owner, spare parts retailer, or regional distributor? SHK Auto guarantees priority fulfillment, bulk margins, and 100% replacement warranty support.
+              Are you a two-wheeler workshop owner, spare parts retailer, or regional distributor? S.H.K ENTERPRISES guarantees priority fulfillment, bulk margins, and 100% replacement warranty support.
             </p>
 
             <div className="workshop-perks">

@@ -12,7 +12,7 @@ export function WorkshopSpotlight() {
             <div className="workshop-image-wrapper">
               <img
                 src="/images/workshop.jpg"
-                alt="Two-Wheeler Workshop Mechanics Rebuilding Engines with SHK Spares"
+                alt="Two-Wheeler Workshop Mechanics Rebuilding Engines with S.H.K ENTERPRISES Spares"
                 className="workshop-spotlight-img"
               />
               <div className="workshop-media-badge">
@@ -69,7 +69,7 @@ export function WorkshopSpotlight() {
                 Explore Spare Parts Catalog
               </Link>
               <a
-                href="https://wa.me/919876543210?text=Hello%20SHK%20Auto%2C%20I%20am%20a%20mechanic%20inquiring%20about%20parts"
+                href="https://wa.me/919876543210?text=Hello%20S.H.K%20ENTERPRISES%2C%20I%20am%20a%20mechanic%20inquiring%20about%20parts"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-outline"
