@@ -17,9 +17,9 @@ interface Review {
 const REVIEWS: Review[] = [
   {
     stars: 5,
-    badge: "FUJI™ Cylinder Liners",
+    badge: "Nexcolle™ 4Ah Batteries",
     quote:
-      "We rebuild around 25 to 30 motorcycle engines every month. Ever since switching to FUJI cylinder liners and pistons from S.H.K ENTERPRISES, our rework rate dropped to virtually zero. No bore seizing, no oil burning.",
+      "We install around 50 to 60 motorcycle batteries every month. Ever since switching to Nexcolle Maintenance-Free VRLA batteries from S.H.K ENTERPRISES, customer complaints dropped to virtually zero. Instant cranking, zero leakage, and perfect fitment.",
     initials: "MK",
     avatarBg: "linear-gradient(135deg, #1e293b, #0f172a)",
     name: "Mahesh Kumar",
@@ -50,13 +50,13 @@ const REVIEWS: Review[] = [
   },
   {
     stars: 5,
-    badge: "FUJI™ Forged Pistons",
+    badge: "Nexcolle™ Heavy-Duty 9Ah",
     quote:
-      "The micro-tin skirt coating on FUJI pistons makes the critical break-in period completely stress-free. In 6 months of daily rebuilds on Pulsars and Apaches, we haven't seen a single piston scuff or ring failure.",
+      "We service Royal Enfield Classic 350 and sports bikes daily. Nexcolle 9Ah and 14Ah batteries deliver high cold-cranking torque effortlessly even after standing in freezing winter for weeks. Best battery for heavy singles and twins.",
     initials: "VS",
     avatarBg: "linear-gradient(135deg, #d97706, #92400e)",
     name: "Vikram Shinde",
-    role: "Chief Rebuilder, Precision Engine Works",
+    role: "Chief Technician, Precision Moto Works",
     location: "Pune, Maharashtra",
   },
   {
@@ -72,24 +72,24 @@ const REVIEWS: Review[] = [
   },
   {
     stars: 5,
-    badge: "Centrifugal Cylinder Liners",
+    badge: "Nexcolle™ Sports 7Ah",
     quote:
-      "Centrifugal cast iron liners from S.H.K ENTERPRISES have zero porosity and exact roundness right out of the box. Cuts our lathe and diamond-honing cycle time in half with flawless compression retention.",
+      "We install Nexcolle 7Ah batteries on Apache RTR, Pulsar 220, and KTMs. The sustained voltage under heavy LED lighting and ABS load is rock solid. Never had a single dead cell comeback.",
     initials: "GD",
     avatarBg: "linear-gradient(135deg, #475569, #1e293b)",
     name: "Gurpreet Dhillon",
-    role: "Master Re-borer, Doaba Engine Re-boring Works",
+    role: "Head Technician, Doaba Moto Care",
     location: "Jalandhar, Punjab",
   },
   {
     stars: 5,
-    badge: "SUH-35 Bimetallic Valves",
+    badge: "Nexcolle™ VRLA Sealed",
     quote:
-      "The SUH-35 bimetallic valves withstand severe high-temperature cruising without valve head mushrooming or stem wear. By far the highest quality aftermarket valves in India.",
+      "The leak-proof sealed AGM construction handles bad potholes and heavy road vibrations across Hyderabad without terminal corrosion or acid spilling. Cleanest battery install in the market.",
     initials: "MA",
     avatarBg: "linear-gradient(135deg, #0f766e, #115e59)",
     name: "Mohammad Arif",
-    role: "Master Cylinder Head Specialist, Deccan Auto Garage",
+    role: "Proprietor, Deccan Auto Electricals",
     location: "Hyderabad, Telangana",
   },
   {

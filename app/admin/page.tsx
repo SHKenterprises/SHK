@@ -1977,7 +1977,7 @@ export default function AdminDashboardPage() {
                           type="text"
                           value={newCatName}
                           onChange={(e) => setNewCatName(e.target.value)}
-                          placeholder="e.g. Engine Gasket Kits"
+                          placeholder="e.g. Scooter Series Batteries"
                           style={{ width: "100%", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "10px", color: "#ffffff", fontSize: "0.88rem", marginTop: "4px" }}
                         />
                       </div>
@@ -1997,7 +1997,7 @@ export default function AdminDashboardPage() {
                           type="text"
                           value={newCatSlug}
                           onChange={(e) => setNewCatSlug(e.target.value)}
-                          placeholder="e.g. gasket-kits"
+                          placeholder="e.g. scooter-series"
                           style={{ width: "100%", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "10px", color: "#ffffff", fontSize: "0.88rem", marginTop: "4px" }}
                         />
                       </div>
@@ -2006,7 +2006,7 @@ export default function AdminDashboardPage() {
                         <textarea
                           value={newCatDesc}
                           onChange={(e) => setNewCatDesc(e.target.value)}
-                          placeholder="High-tensile asbestos-free gaskets..."
+                          placeholder="High-reliability VRLA batteries..."
                           rows={2}
                           style={{ width: "100%", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "10px", color: "#ffffff", fontSize: "0.88rem", marginTop: "4px" }}
                         />
@@ -2060,7 +2060,7 @@ export default function AdminDashboardPage() {
                             brand: newCat.brand,
                             slug: newCat.slug,
                             description: newCat.description,
-                            image: newCatImage || (newCatBrand === "Nexcolle" ? "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg" : "https://ik.imagekit.io/lv0h5ou9z/products/piston.jpg"),
+                            image: newCatImage || "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
                             productCount: 0,
                           });
                           if (res.success) {
@@ -2412,10 +2412,7 @@ export default function AdminDashboardPage() {
                           if (!newProdTitle) return;
                           const newId = `shk-custom-${Date.now()}`;
                           const newSlug = newProdTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-                          const fallbackImg = newProdBrand === "Nexcolle"
-                            ? "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg"
-                            : "https://ik.imagekit.io/lv0h5ou9z/products/piston.jpg";
-                          const prodImg = newProdImage || fallbackImg;
+                          const prodImg = newProdImage || "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg";
                           const newProduct: Product = {
                             id: newId,
                             slug: newSlug,

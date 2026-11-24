@@ -193,19 +193,8 @@ export default function BrandsPage() {
                       onClick={() => router.push(`/products/${item.slug}`)}
                     >
                       {/* Brand Corner Badge */}
-                      <span className={`product-badge-corner brand-${item.brand.toLowerCase()}`}>
-                        {item.brand === "FUJI" && (
-                          <span
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              background: "#f95716",
-                              display: "inline-block",
-                            }}
-                          />
-                        )}
-                        {item.badge}
+                      <span className="product-badge-corner brand-nexcolle">
+                        {item.badge || "Nexcolle™"}
                       </span>
 
                       {/* Wishlist Button */}
@@ -472,19 +461,8 @@ export default function BrandsPage() {
                       onClick={() => router.push(`/products/${item.slug}`)}
                     >
                       {/* Brand Corner Badge */}
-                      <span className={`product-badge-corner brand-${item.brand.toLowerCase()}`}>
-                        {item.brand === "FUJI" && (
-                          <span
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              background: "#f95716",
-                              display: "inline-block",
-                            }}
-                          />
-                        )}
-                        {item.badge}
+                      <span className="product-badge-corner brand-nexcolle">
+                        {item.badge || "Nexcolle™"}
                       </span>
 
                       {/* Wishlist Button */}

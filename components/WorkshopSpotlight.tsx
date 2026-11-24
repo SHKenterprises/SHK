@@ -16,8 +16,8 @@ export function WorkshopSpotlight() {
                 className="workshop-spotlight-img"
               />
               <div className="workshop-media-badge">
-                <div className="badge-stat">15,000+</div>
-                <div className="badge-label">Engines Rebuilt Nationwide</div>
+                <div className="badge-stat">25,000+</div>
+                <div className="badge-label">Batteries Dispatched Nationwide</div>
               </div>
             </div>
           </div>
@@ -29,7 +29,7 @@ export function WorkshopSpotlight() {
               Built For Mechanics Who Refuse To Compromise On Quality
             </h2>
             <p className="workshop-spotlight-desc">
-              When an engine is open on your bay, you cannot afford parts that seize, burn oil, or trigger customer comebacks. We supply authentic <strong>Nexcolle&trade;</strong> high-crank AGM batteries and <strong>FUJI&trade;</strong> precision engine components directly to independent garages and reconditioners with guaranteed OEM clearances.
+              When a bike arrives at your garage, you cannot afford batteries that leak, die prematurely, or trigger customer comebacks. We supply authentic <strong>Nexcolle&trade;</strong> high-crank VRLA AGM batteries directly to independent workshops and dealers with factory-fresh voltage and hassle-free 36-month warranty.
             </p>
 
             <div className="workshop-spotlight-points">
@@ -38,8 +38,8 @@ export function WorkshopSpotlight() {
                   <Icon name="check" />
                 </div>
                 <div>
-                  <strong>Zero-Defect Fitment &amp; Clearances</strong>
-                  <span>Micron-accurate CNC machining strictly matching Japanese JIS tolerances.</span>
+                  <strong>Zero-Maintenance Factory Sealed Tech</strong>
+                  <span>Hermetically sealed VRLA AGM construction — zero acid leaks, zero water top-ups.</span>
                 </div>
               </div>
 

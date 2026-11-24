@@ -417,7 +417,7 @@ export default function ContactPage() {
                     </label>
                     <textarea
                       rows={3}
-                      placeholder="e.g. Inquiring about 20 sets of Splendor & Pulsar pistons, 15 batteries with dispatch to Jaipur..."
+                      placeholder="e.g. Inquiring about 25 Nexcolle 12V 4Ah batteries, 10 12V 9Ah batteries with dispatch to Jaipur..."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       style={{

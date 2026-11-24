@@ -16,8 +16,8 @@ export function FaqSection() {
       a: "Nexcolle batteries come with comprehensive warranty coverage ranging from 24 to 36 months (including pro-rata terms) depending on the specific model and ampere rating. Each battery comes serialized with a tamper-proof barcode for hassle-free digital registration.",
     },
     {
-      q: "Are FUJI Engine Spare Parts compatible with BS6 and fuel-injected bikes?",
-      a: "Yes. All FUJI engine spares — including pistons, rings, valves, and cylinder sleeves — are manufactured to match the tight clearance and high-combustion temperatures required by modern BS4 and BS6/OBD-2 electronic fuel injection (EFI) engines.",
+      q: "Are Nexcolle batteries compatible with modern BS6 and EFI motorcycles?",
+      a: "Yes. All Nexcolle VRLA AGM batteries deliver steady 12V current and high reserve capacity required by modern BS6 electronic fuel injection (EFI) pumps, digital instrument consoles, and dual-channel ABS systems.",
     },
     {
       q: "Can small local garages purchase directly without high minimum order quantities?",

@@ -127,36 +127,31 @@ export function Footer({ onSelectCategory }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="footer-title">Product Categories</h4>
+            <h4 className="footer-title">Battery Categories</h4>
             <ul className="footer-links">
               <li>
                 <Link href="/products?category=battery">
-                  Nexcolle Batteries
+                  All Two-Wheeler Batteries
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=piston">
-                  Piston &amp; Con-Rod Kits
+                <Link href="/products?category=commuter">
+                  Commuter Series (2.5Ah - 4Ah)
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=liner">
-                  Cylinder Liners &amp; Sleeves
+                <Link href="/products?category=performance">
+                  Performance &amp; Sports (5Ah - 7Ah)
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=valves">
-                  High-Heat Engine Valves
+                <Link href="/products?category=cruiser">
+                  Cruiser &amp; Heavy (9Ah - 14Ah)
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=gasket">
-                  Head Gaskets &amp; Sets
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=gasket">
-                  Gasket Cloth &amp; Sheets
+                <Link href="/products">
+                  Wholesale Trade Slabs
                 </Link>
               </li>
             </ul>
@@ -187,7 +182,7 @@ export function Footer({ onSelectCategory }: FooterProps) {
               &copy; <span>{currentYear}</span> S.H.K ENTERPRISES. All rights reserved.
             </div>
             <div>
-              Nexcolle&trade; &amp; FUJI&trade; are registered trademarks distributed by S.H.K ENTERPRISES.
+              Nexcolle&trade; is an authorized trademark distributed by S.H.K ENTERPRISES.
             </div>
           </div>
         </div>

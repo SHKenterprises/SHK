@@ -10,9 +10,9 @@ import { BrandPillars } from "@/components/BrandPillars";
 import { FaqSection } from "@/components/FaqSection";
 
 export const metadata: Metadata = {
-  title: "About Us | S.H.K ENTERPRISES - India's Trusted 2-Wheeler Spares & Battery Distributor",
+  title: "About Us | S.H.K ENTERPRISES - India's Trusted 2-Wheeler Battery Distributor",
   description:
-    "Learn about S.H.K ENTERPRISES, authorized distributor of Nexcolle™ High-Performance Batteries and FUJI™ Precision Engine Spares across India. Delivering OEM tolerances and reliable supply.",
+    "Learn about S.H.K ENTERPRISES, authorized distributor of genuine Nexcolle™ High-Performance Maintenance-Free Batteries across India. Delivering reliable power and nationwide supply.",
 };
 
 export default function AboutPage() {
@@ -201,7 +201,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Brand Focus: Nexcolle & FUJI */}
+        {/* Brand Focus: Nexcolle Batteries */}
         <BrandPillars />
 
         {/* Frequently Asked Questions for Buyers & Dealers */}

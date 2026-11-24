@@ -28,13 +28,10 @@ export function QuoteModal({
     if (selectedProduct) {
       // Find closest matching option or set directly
       const options = [
-        "Nexcolle Two-Wheeler Batteries",
-        "FUJI Pistons & Con-Rods",
-        "FUJI Cylinder Liners & Sleeves",
-        "FUJI Engine Intake & Exhaust Valves",
-        "FUJI Cylinder Head Gaskets",
-        "FUJI Full Overhaul Gasket Sets",
-        "FUJI Gasket Cloth Sheet",
+        "Nexcolle Two-Wheeler Batteries (All Series)",
+        "Nexcolle Commuter 2.5Ah & 4Ah Series",
+        "Nexcolle Sports 5Ah & 7Ah Series",
+        "Nexcolle Cruiser 9Ah & 14Ah Series",
         "Wholesale Dealership Program",
         "Other Inquiries",
       ];
@@ -179,26 +176,17 @@ export function QuoteModal({
                 value={product}
                 onChange={(e) => setProduct(e.target.value)}
               >
-                <option value="Nexcolle Two-Wheeler Batteries">
-                  Nexcolle Two-Wheeler Batteries
+                <option value="Nexcolle Two-Wheeler Batteries (All Series)">
+                  Nexcolle Two-Wheeler Batteries (All Series)
                 </option>
-                <option value="FUJI Pistons & Con-Rods">
-                  FUJI Pistons &amp; Con-Rods
+                <option value="Nexcolle Commuter 2.5Ah & 4Ah Series">
+                  Nexcolle Commuter 2.5Ah &amp; 4Ah Series
                 </option>
-                <option value="FUJI Cylinder Liners & Sleeves">
-                  FUJI Cylinder Liners &amp; Sleeves
+                <option value="Nexcolle Sports 5Ah & 7Ah Series">
+                  Nexcolle Sports 5Ah &amp; 7Ah Series
                 </option>
-                <option value="FUJI Engine Intake & Exhaust Valves">
-                  FUJI Engine Intake &amp; Exhaust Valves
-                </option>
-                <option value="FUJI Cylinder Head Gaskets">
-                  FUJI Cylinder Head Gaskets
-                </option>
-                <option value="FUJI Full Overhaul Gasket Sets">
-                  FUJI Full Overhaul Gasket Sets
-                </option>
-                <option value="FUJI Gasket Cloth Sheet">
-                  FUJI Gasket Cloth Sheet
+                <option value="Nexcolle Cruiser 9Ah & 14Ah Series">
+                  Nexcolle Cruiser 9Ah &amp; 14Ah Series
                 </option>
                 <option value="Wholesale Dealership Program">
                   Wholesale Dealership Program
@@ -214,7 +202,7 @@ export function QuoteModal({
                 name="details"
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
-                placeholder="e.g. 20 sets of Splendor Pistons, 10 Nexcolle 12V 4Ah batteries..."
+                placeholder="e.g. 25 Nexcolle 12V 4Ah batteries for Activa/Splendor, 10 12V 9Ah for Classic 350..."
               />
             </div>
 

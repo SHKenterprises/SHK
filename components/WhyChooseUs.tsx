@@ -9,9 +9,9 @@ export function WhyChooseUs() {
       desc: "Over three decades supplying North India's premier engine rebuilders and automotive distributors.",
     },
     {
-      icon: "gear",
-      title: "Japanese Metallurgy Standards",
-      desc: "Forged AC8A aluminum and spun-cast grey iron manufactured to strict JIS & DIN specifications.",
+      icon: "bolt",
+      title: "Advanced VRLA AGM Technology",
+      desc: "Ultra-dense calcium alloy grids with microporous glass mats delivering maximum cold-cranking power.",
     },
     {
       icon: "tag",

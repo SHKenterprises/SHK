@@ -25,7 +25,7 @@ export function ProductCatalog({
   const [productsList, setProductsList] = useState<Product[]>(PRODUCTS);
   const [categoriesList, setCategoriesList] = useState<CategoryItem[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedBrand, setSelectedBrand] = useState<"all" | "Nexcolle" | "FUJI">("all");
+  const [selectedBrand, setSelectedBrand] = useState<"all" | "Nexcolle">("all");
   const [sortBy, setSortBy] = useState<"recommended" | "price-asc" | "price-desc" | "rating">("recommended");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [addedId, setAddedId] = useState<string | null>(null);
@@ -198,8 +198,7 @@ export function ProductCatalog({
               }}
             >
               <option value="all">All Brands</option>
-              <option value="Nexcolle">Nexcolle™</option>
-              <option value="FUJI">FUJI™</option>
+              <option value="Nexcolle">Nexcolle™ Genuine</option>
             </select>
             <div
               style={{
@@ -286,19 +285,8 @@ export function ProductCatalog({
                   onClick={() => router.push(`/products/${item.slug}`)}
                 >
                   {/* Brand Corner Badge */}
-                  <span className={`product-badge-corner brand-${item.brand.toLowerCase()}`}>
-                    {item.brand === "FUJI" && (
-                      <span
-                        style={{
-                          width: "6px",
-                          height: "6px",
-                          borderRadius: "50%",
-                          background: "#f95716",
-                          display: "inline-block",
-                        }}
-                      />
-                    )}
-                    {item.badge}
+                  <span className="product-badge-corner brand-nexcolle">
+                    {item.badge || "Nexcolle™"}
                   </span>
 
                   {/* Wishlist Button */}

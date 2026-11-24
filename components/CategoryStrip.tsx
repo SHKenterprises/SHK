@@ -44,7 +44,7 @@ export function CategoryStrip({ onSelectCategory }: CategoryStripProps) {
           dbCats.map((c) => ({
             id: c.slug || c.id,
             title: c.name,
-            img: c.image || "/images/piston.png",
+            img: c.image || "/images/battery.jpg",
             alt: c.name,
           }))
         );
