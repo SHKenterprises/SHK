@@ -69,20 +69,6 @@ export function Header({ onOpenQuote }: HeaderProps) {
           )}
 
           <ul className={`nav-links ${menuOpen ? "active" : ""}`} id="navLinks">
-            {/* Mobile Drawer Brand Header */}
-            <li className="mobile-drawer-brand">
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", paddingBottom: "14px", borderBottom: "1px solid rgba(255, 255, 255, 0.12)", marginBottom: "10px" }}>
-                <div className="logo-badge" style={{ width: "36px", height: "36px", fontSize: "1.05rem" }}>S</div>
-                <div>
-                  <div style={{ fontSize: "1.05rem", fontWeight: 800, color: "#ffffff", lineHeight: 1.1 }}>
-                    S.H.K <span style={{ color: "var(--primary)" }}>ENTERPRISES</span>
-                  </div>
-                  <div style={{ fontSize: "0.68rem", color: "#94a3b8", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                    Automotive Batteries
-                  </div>
-                </div>
-              </div>
-            </li>
             <li>
               <Link
                 href="/"

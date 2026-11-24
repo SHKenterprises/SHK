@@ -2758,16 +2758,14 @@
 }
 
 .hero-indusfoto-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  align-items: flex-end;
+  display: flex;
+  align-items: center;
   gap: 36px;
   min-height: 480px;
 }
 
 @media (max-width: 1024px) {
   .hero-indusfoto-grid {
-    grid-template-columns: 1fr;
     min-height: auto;
     gap: 32px;
   }

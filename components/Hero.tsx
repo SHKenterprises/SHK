@@ -220,39 +220,6 @@ export function Hero({ onOpenQuote, badge, headline, subtitle, slides }: HeroPro
               </div>
             </div>
           </div>
-
-          {/* Right Column: Floating White 4-Card Strip directly at bottom-right over CNC gear */}
-          <div className="hero-indusfoto-right">
-            <div className="hero-parts-card-float">
-              <Link href="/products?category=battery" className="hero-float-col" title="Nexcolle™ AGM Batteries">
-                <div className="hero-float-thumb">
-                  <img src="/images/hero-card-battery.jpg" alt="Nexcolle™ AGM Battery" />
-                </div>
-                <span className="hero-float-label">Nexcolle™ AGM</span>
-              </Link>
-
-              <Link href="/products" className="hero-float-col" title="Nexcolle™ 4Ah Commuter Battery">
-                <div className="hero-float-thumb">
-                  <img src="https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg" alt="Nexcolle™ 4Ah Battery" />
-                </div>
-                <span className="hero-float-label">4Ah Commuter</span>
-              </Link>
-
-              <Link href="/products" className="hero-float-col" title="Nexcolle™ 5Ah Performance Battery">
-                <div className="hero-float-thumb">
-                  <img src="https://ik.imagekit.io/lv0h5ou9z/products/battery-5ah.jpg" alt="Nexcolle™ 5Ah Battery" />
-                </div>
-                <span className="hero-float-label">5Ah Sports</span>
-              </Link>
-
-              <Link href="/products" className="hero-float-col" title="Nexcolle™ 9Ah/14Ah Cruiser Battery">
-                <div className="hero-float-thumb">
-                  <img src="https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg" alt="Nexcolle™ High-Torque Battery" />
-                </div>
-                <span className="hero-float-label">9Ah/14Ah Cruiser</span>
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </section>
