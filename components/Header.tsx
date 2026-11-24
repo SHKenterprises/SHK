@@ -69,6 +69,20 @@ export function Header({ onOpenQuote }: HeaderProps) {
           )}
 
           <ul className={`nav-links ${menuOpen ? "active" : ""}`} id="navLinks">
+            {/* Mobile Drawer Brand Header */}
+            <li className="mobile-drawer-brand">
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", paddingBottom: "14px", borderBottom: "1px solid rgba(255, 255, 255, 0.12)", marginBottom: "10px" }}>
+                <div className="logo-badge" style={{ width: "36px", height: "36px", fontSize: "1.05rem" }}>S</div>
+                <div>
+                  <div style={{ fontSize: "1.05rem", fontWeight: 800, color: "#ffffff", lineHeight: 1.1 }}>
+                    S.H.K <span style={{ color: "var(--primary)" }}>ENTERPRISES</span>
+                  </div>
+                  <div style={{ fontSize: "0.68rem", color: "#94a3b8", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                    Automotive Batteries
+                  </div>
+                </div>
+              </div>
+            </li>
             <li>
               <Link
                 href="/"
@@ -199,26 +213,11 @@ export function Header({ onOpenQuote }: HeaderProps) {
           </ul>
         </nav>
 
-        <div className="header-actions" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div className="header-actions">
           {/* Like / Wishlist Button -> Redirects to /wishlist */}
           <Link
             href="/wishlist"
-            style={{
-              position: "relative",
-              background: pathname === "/wishlist" ? "var(--primary)" : "rgba(255, 255, 255, 0.08)",
-              color: "#ffffff",
-              border: pathname === "/wishlist" ? "1px solid var(--primary)" : "1px solid rgba(255, 255, 255, 0.14)",
-              borderRadius: "var(--radius-full)",
-              padding: "8px 12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "6px",
-              cursor: "pointer",
-              boxShadow: pathname === "/wishlist" ? "0 4px 14px rgba(249, 87, 22, 0.35)" : "var(--shadow-sm)",
-              transition: "var(--transition)",
-              textDecoration: "none",
-            }}
+            className={`header-action-btn header-wishlist-btn ${pathname === "/wishlist" ? "active" : ""}`}
             aria-label="View saved parts"
             title="Wishlist / Saved Parts"
           >
@@ -232,21 +231,7 @@ export function Header({ onOpenQuote }: HeaderProps) {
               }}
             />
             {wishlist.length > 0 && (
-              <span
-                style={{
-                  background: pathname === "/wishlist" ? "#ffffff" : "var(--primary)",
-                  color: pathname === "/wishlist" ? "var(--primary)" : "#ffffff",
-                  borderRadius: "999px",
-                  fontSize: "0.75rem",
-                  fontWeight: 800,
-                  padding: "2px 7px",
-                  minWidth: "18px",
-                  height: "18px",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <span className="header-badge-count">
                 {wishlist.length}
               </span>
             )}
@@ -255,23 +240,7 @@ export function Header({ onOpenQuote }: HeaderProps) {
           {/* Cart Button -> Redirects to /cart */}
           <Link
             href="/cart"
-            style={{
-              position: "relative",
-              background: pathname === "/cart" ? "var(--primary)" : "rgba(255, 255, 255, 0.08)",
-              color: "#ffffff",
-              border: pathname === "/cart" ? "1px solid var(--primary)" : "1px solid rgba(255, 255, 255, 0.14)",
-              borderRadius: "var(--radius-full)",
-              padding: "8px 14px",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              cursor: "pointer",
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              boxShadow: pathname === "/cart" ? "0 4px 14px rgba(249, 87, 22, 0.35)" : "var(--shadow-sm)",
-              transition: "var(--transition)",
-              textDecoration: "none",
-            }}
+            className={`header-action-btn header-cart-btn ${pathname === "/cart" ? "active" : ""}`}
             aria-label="View shopping cart"
             title="Shopping Cart"
           >
@@ -284,31 +253,19 @@ export function Header({ onOpenQuote }: HeaderProps) {
               }}
             />
             {itemCount > 0 && (
-              <span
-                style={{
-                  background: pathname === "/cart" ? "#ffffff" : "var(--primary)",
-                  color: pathname === "/cart" ? "var(--primary)" : "#ffffff",
-                  borderRadius: "999px",
-                  fontSize: "0.75rem",
-                  fontWeight: 800,
-                  padding: "2px 7px",
-                  minWidth: "18px",
-                  height: "18px",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <span className="header-badge-count">
                 {itemCount}
               </span>
             )}
           </Link>
 
-          {/* User Profile Button -> Redirects to /profile */}
+          {/* User Profile Button (Desktop only, drawer handles mobile) */}
           {user ? (
-            <div style={{ position: "relative" }}>
+            <div className="header-user-wrap" style={{ position: "relative" }}>
               <Link
                 href="/profile"
+                className="header-user-btn"
+                title="My Profile"
                 style={{
                   background: pathname === "/profile" ? "var(--primary)" : "rgba(255, 255, 255, 0.08)",
                   border: pathname === "/profile" ? "1px solid var(--primary)" : "1px solid rgba(255, 255, 255, 0.16)",
@@ -325,8 +282,6 @@ export function Header({ onOpenQuote }: HeaderProps) {
                   boxShadow: pathname === "/profile" ? "0 4px 14px rgba(249, 87, 22, 0.35)" : "var(--shadow-sm)",
                   transition: "var(--transition)",
                 }}
-                className="header-user-btn"
-                title="My Profile"
               >
                 <div
                   style={{

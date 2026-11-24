@@ -130,7 +130,7 @@
       scroll-behavior: smooth;
       -webkit-text-size-adjust: 100%;
       font-family: var(--font-sans);
-      overflow-x: clip;
+      overflow-x: hidden;
       width: 100%;
       max-width: 100vw;
     }
@@ -140,7 +140,7 @@
       background-color: #090c13;
       color: var(--text-main);
       line-height: 1.6;
-      overflow-x: clip;
+      overflow-x: hidden;
       width: 100%;
       max-width: 100vw;
       -webkit-font-smoothing: antialiased;
@@ -462,19 +462,67 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+    }
+
+    .header-action-btn {
+      position: relative;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-full);
+      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    .header-action-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .header-action-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 4px 14px rgba(249, 87, 22, 0.35);
+    }
+    .header-badge-count {
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 999px;
+      fontSize: 0.72rem;
+      fontWeight: 800;
+      padding: 1px 6px;
+      min-width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-action-btn.active .header-badge-count {
+      background: #ffffff;
+      color: var(--primary);
     }
 
     .mobile-toggle {
       display: none;
-      background: none;
-      border: 1px solid var(--light-border);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       width: 42px;
       height: 42px;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       place-items: center;
-      color: var(--text-main);
+      color: #ffffff;
+      transition: var(--transition);
     }
 
     /* ==========================================================
@@ -4677,33 +4725,204 @@
   }
 }
 /* ==========================================================
-   BRAND WORDMARK: "S.H.K ENTERPRISES" (longer name, keep on one line)
+   MOBILE HEADER SUITE: EXACT MATCH FOR REFERENCE MOCKUP
+   - [S] orange rounded square badge (with warm glow)
+   - S.H.K (white) ENTERPRISES (orange #f95716) on one clean line
+   - [ ♡ ] circular icon button
+   - [ 🛒 ] circular icon button
+   - [ ☰ ] rounded square toggle button
+   - Fits on all mobile screens without wrapping or overflow!
    ========================================================== */
 .logo-title {
   white-space: nowrap;
 }
 
 @media (max-width: 768px) {
+  .header {
+    background: #090c13 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+  .header .container {
+    height: 60px !important;
+    padding-inline: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+  .header .logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    flex-shrink: 0 !important;
+  }
+  .header .logo-badge {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    background: linear-gradient(135deg, #f95716, #ea4a09) !important;
+    border-radius: 11px !important;
+    display: grid !important;
+    place-items: center !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    font-size: 1.15rem !important;
+    box-shadow: 0 4px 14px rgba(249, 87, 22, 0.45) !important;
+  }
+  .header .logo-text {
+    display: flex !important;
+    flex-direction: column !important;
+  }
   .header .logo-title {
-    font-size: 1.15rem;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    letter-spacing: -0.02em !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+  }
+  .header .logo-title span {
+    color: var(--primary) !important;
+    font-weight: 900 !important;
+  }
+  .header .logo-sub {
+    display: none !important;
+  }
+  .header-user-wrap,
+  .header-user-btn {
+    display: none !important;
+  }
+  .header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+  .header-action-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    position: relative !important;
+    box-shadow: none !important;
+  }
+  .header-action-btn:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+  .header-action-btn.active {
+    background: rgba(249, 87, 22, 0.2) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+  }
+  .header-action-btn.active svg {
+    color: var(--primary) !important;
+    stroke: var(--primary) !important;
+  }
+  .header-action-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+  .header-badge-count {
+    position: absolute !important;
+    top: -2px !important;
+    right: -2px !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    padding: 0 4px !important;
+    border-radius: 999px !important;
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1.5px solid #090c13 !important;
+    line-height: 1 !important;
+  }
+  .mobile-toggle {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    border-radius: 11px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    display: grid !important;
+    place-items: center !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .mobile-toggle:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+  .mobile-toggle svg {
+    width: 18px !important;
+    height: 18px !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+
+  /* Responsive Hero Headlines on Mobile */
+  .hero-title {
+    font-size: clamp(1.8rem, 6.2vw, 2.3rem) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 12px !important;
+  }
+  .hero-desc {
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 20px !important;
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 400px) {
+  .header .container {
+    padding-inline: 10px !important;
+  }
   .header .logo {
-    gap: 8px;
+    gap: 6px !important;
   }
   .header .logo-badge {
-    width: 36px;
-    height: 36px;
-    font-size: 1.05rem;
-    border-radius: 10px;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    font-size: 1.05rem !important;
+    border-radius: 9px !important;
   }
   .header .logo-title {
-    font-size: 0.98rem;
+    font-size: 0.95rem !important;
   }
-  .header .logo-sub {
-    font-size: 0.56rem;
-    letter-spacing: 0.08em;
+  .header-actions {
+    gap: 6px !important;
+  }
+  .header-action-btn {
+    width: 35px !important;
+    height: 35px !important;
+    min-width: 35px !important;
+  }
+  .header-action-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .mobile-toggle {
+    width: 35px !important;
+    height: 35px !important;
+    min-width: 35px !important;
+    border-radius: 9px !important;
+  }
+  .mobile-toggle svg {
+    width: 16px !important;
+    height: 16px !important;
   }
 }
