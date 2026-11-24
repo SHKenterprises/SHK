@@ -106,7 +106,7 @@ export function ProductQuickView({
                 overflow: "hidden",
                 border: "1px solid var(--light-border)",
                 backgroundColor: "#f8fafc",
-                aspectRatio: "4 / 3",
+                aspectRatio: "1 / 1",
                 position: "relative",
               }}
             >

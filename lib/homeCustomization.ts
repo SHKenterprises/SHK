@@ -9,10 +9,10 @@ export interface HomeCustomization {
 }
 
 export const DEFAULT_HOME_CUSTOMIZATION: HomeCustomization = {
-  heroBadge: "OEM-GRADE ENGINEERING & SPARES",
+  heroBadge: "100% GENUINE TWO-WHEELER BATTERIES",
   heroHeadline: "Power Every Ride. Engineered to Last.",
   heroSubtitle:
-    "Genuine Nexcolle™ high-CCA motorcycle batteries and FUJI™ precision engine components. Built for extreme heat, heavy duty, and maximum reliability.",
+    "Genuine Nexcolle™ high-CCA motorcycle batteries engineered for extreme Indian weather, heavy duty, and instantaneous ignition.",
   showCompatibilityMatrix: true,
   showBrandPillars: true,
   showWholesaleSlabs: true,

@@ -22,8 +22,8 @@ export default function BrandsPage() {
 
   const { addToCart, isInWishlist, toggleWishlist } = useCart();
 
-  const nexcolleProducts = PRODUCTS.filter((p) => p.brand === "Nexcolle");
-  const fujiProducts = PRODUCTS.filter((p) => p.brand === "FUJI");
+  const nexcolleProducts = PRODUCTS.filter((p) => p.category === "commuter" || p.category === "battery");
+  const cruiserProducts = PRODUCTS.filter((p) => p.category === "performance" || p.category === "cruiser");
 
   const handleQuickAdd = (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
@@ -78,10 +78,10 @@ export default function BrandsPage() {
                 EXCLUSIVE AUTHORIZED DISTRIBUTION
               </span>
               <h1 style={{ fontSize: "clamp(2.2rem, 4vw, 3.2rem)", fontWeight: 800, color: "#ffffff", letterSpacing: "-0.03em" }}>
-                World-Class Spares Built By Industry Specialists
+                Nexcolle™ Two-Wheeler Power Systems
               </h1>
               <p style={{ color: "#94a3b8", fontSize: "1.05rem", lineHeight: 1.6, marginTop: "12px" }}>
-                S.H.K ENTERPRISES partners directly with <strong>Nexcolle™</strong> and <strong>FUJI™</strong> factories to deliver genuine, traceable motorcycle components engineered for extreme Indian road and heat conditions.
+                S.H.K ENTERPRISES is the authorized national distributor for <strong>Nexcolle™</strong> high-performance VRLA AGM motorcycle batteries engineered for extreme Indian weather, heavy duty, and instantaneous starts.
               </p>
             </div>
           </div>
@@ -366,7 +366,7 @@ export default function BrandsPage() {
           </div>
         </section>
 
-        {/* Brand 2: FUJI Section */}
+        {/* Series 2: Heavy-Duty & Cruiser Series */}
         <section style={{ padding: "70px 0 50px 0", backgroundColor: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
           <div className="container">
             <div
@@ -389,77 +389,77 @@ export default function BrandsPage() {
                 }}
               >
                 <img
-                  src="/images/piston-conrod.jpg"
-                  alt="FUJI Precision Engine Spares"
+                  src="/images/battery.jpg"
+                  alt="Nexcolle Heavy-Duty & Cruiser Series"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>
 
               <div>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#f1f5f9", border: "1px solid #cbd5e1", padding: "6px 14px", borderRadius: "999px", marginBottom: "14px" }}>
-                  <Icon name="gear" style={{ width: "16px", height: "16px", color: "#0f172a" }} />
+                  <Icon name="bolt" style={{ width: "16px", height: "16px", color: "var(--primary)" }} />
                   <span style={{ fontSize: "0.8rem", fontWeight: 800, color: "#0f172a", textTransform: "uppercase" }}>
-                    Internal Engine Metallurgy
+                    High Cold Cranking Power
                   </span>
                 </div>
                 <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 800, color: "#090c13", letterSpacing: "-0.02em", marginBottom: "12px" }}>
-                  FUJI™ Japanese Metallurgy Engine Spares
+                  Nexcolle™ Heavy-Duty &amp; Cruiser Series
                 </h2>
                 <p style={{ color: "#64748b", fontSize: "0.95rem", lineHeight: 1.65, marginBottom: "20px" }}>
-                  Engineered to precise Japanese JIS B8032 industrial standards, FUJI manufactures pistons, centrifugal sleeves, valve trains, and overhaul gasket sets for motorcycles needing high thermal endurance and sustained compression under severe loads.
+                  Engineered for 150cc to 650cc performance sports, cruiser, and touring motorcycles. Features ultra-low internal resistance, rapid alternator recharge, and up to 260 CCA for instantaneous cold-engine ignition.
                 </p>
 
                 {/* Tech Highlights */}
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "14px", marginBottom: "24px" }}>
                   <div style={{ background: "#ffffff", padding: "14px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>AC8A Alloy</div>
-                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>High-silicon forged aluminum</div>
+                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>Up to 260 CCA</div>
+                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>Instant high-torque crank</div>
                   </div>
                   <div style={{ background: "#ffffff", padding: "14px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>±0.005mm</div>
-                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>Precision micrometer clearance</div>
+                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>VRLA AGM</div>
+                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>100% leak &amp; spill proof</div>
                   </div>
                   <div style={{ background: "#ffffff", padding: "14px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>SUH-35 Valves</div>
-                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>Bimetal friction-welded stems</div>
+                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>36 Months</div>
+                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>Nationwide warranty guarantee</div>
                   </div>
                   <div style={{ background: "#ffffff", padding: "14px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>MLS Gaskets</div>
-                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>Multi-layer steel with Viton coating</div>
+                    <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#090c13" }}>Calcium Grids</div>
+                    <div style={{ fontSize: "0.78rem", color: "#64748b" }}>Ultra-dense corrosion resistant</div>
                   </div>
                 </div>
 
                 <Link
-                  href="/products?brand=FUJI"
+                  href="/products?category=cruiser"
                   className="btn btn-primary"
                   style={{ borderRadius: "var(--radius-full)", padding: "12px 26px", fontWeight: 700 }}
                 >
-                  View All FUJI Engine Spares
+                  View Cruiser &amp; Heavy Range
                 </Link>
               </div>
             </div>
 
-            {/* FUJI Product Shelf */}
+            {/* Heavy-Duty Product Shelf */}
             <div style={{ marginTop: "32px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", flexWrap: "wrap", gap: "12px" }}>
                 <div>
                   <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#090c13", letterSpacing: "-0.02em" }}>
-                    Featured FUJI™ Precision Spares
+                    Featured Nexcolle™ High-Power Batteries
                   </h3>
                   <p style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "4px" }}>
-                    High-compression pistons, centrifugal cast liners, and stellite valve sets for extreme thermal resilience.
+                    7Ah, 9Ah, and 14Ah heavy-crank batteries for Pulsar 220, Dominar, Royal Enfield Classic 350, and 650 Twins.
                   </p>
                 </div>
                 <Link
-                  href="/products?brand=FUJI"
+                  href="/products?category=cruiser"
                   style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--primary)", textDecoration: "none" }}
                 >
-                  View All FUJI Spares
+                  View All Batteries
                 </Link>
               </div>
 
               <div className="product-grid">
-                {fujiProducts.slice(0, 4).map((item) => {
+                {cruiserProducts.slice(0, 4).map((item) => {
                   const isFav = isInWishlist(item.id);
                   const isAdded = addedId === item.id;
 
@@ -666,7 +666,7 @@ export default function BrandsPage() {
                   AUTHORIZED DEALERSHIP NETWORK
                 </span>
                 <h3 style={{ fontSize: "1.7rem", fontWeight: 800, color: "#ffffff", marginBottom: "8px" }}>
-                  Become an Authorized Nexcolle™ &amp; FUJI™ Stockist
+                  Become an Authorized Nexcolle™ Battery Stockist
                 </h3>
                 <p style={{ color: "#94a3b8", fontSize: "0.95rem", maxWidth: "600px" }}>
                   Enjoy exclusive territorial dealership rights, 30-day billing cycles, guaranteed replacement logistics, and marketing collateral for your retail counter.

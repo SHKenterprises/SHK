@@ -423,6 +423,42 @@ export async function updateOrderStatus(
   return { success: true };
 }
 
+/**
+ * Delete order from Supabase & local storage
+ */
+export async function deleteOrder(
+  orderNumber: string
+): Promise<{ success: boolean; error?: string }> {
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem("shk_all_orders");
+      if (stored) {
+        const list = JSON.parse(stored);
+        if (Array.isArray(list)) {
+          localStorage.setItem(
+            "shk_all_orders",
+            JSON.stringify(list.filter((o: any) => o.order_number !== orderNumber && o.id !== orderNumber))
+          );
+        }
+      }
+    } catch {}
+  }
+
+  if (!isSupabaseConfigured()) {
+    return { success: true };
+  }
+
+  const { error } = await supabase
+    .from("orders")
+    .delete()
+    .eq("order_number", orderNumber);
+
+  if (error) {
+    return { success: false, error: error.message };
+  }
+  return { success: true };
+}
+
 // ------------------------------------------------------------------------------
 // 3. INQUIRIES & B2B RFQS SERVICE
 // ------------------------------------------------------------------------------
@@ -970,7 +1006,7 @@ export async function getActiveCoupons(): Promise<any[]> {
 export interface CategoryItem {
   id: string;
   name: string;
-  brand: "Nexcolle" | "FUJI";
+  brand: "Nexcolle" | string;
   slug: string;
   description: string;
   image?: string;
@@ -984,35 +1020,35 @@ export async function getCategories(): Promise<CategoryItem[]> {
   const fallbackCategories: CategoryItem[] = [
     {
       id: "battery",
-      name: "Batteries & Power Systems",
+      name: "All Two-Wheeler Batteries",
       brand: "Nexcolle",
       slug: "battery",
-      description: "Maintenance-Free VRLA AGM motorcycle batteries with 36-month warranty",
+      description: "100% Genuine Nexcolle™ Maintenance-Free VRLA AGM motorcycle batteries with 36-month warranty",
       image: "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
     },
     {
-      id: "piston",
-      name: "Forged & Cast Pistons",
-      brand: "FUJI",
-      slug: "piston",
-      description: "Japanese AC8A hypereutectic metallurgy piston kits with micro-tin skirt coating",
-      image: "https://ik.imagekit.io/lv0h5ou9z/products/piston.jpg",
+      id: "commuter",
+      name: "Commuter Series (2.5Ah - 4Ah)",
+      brand: "Nexcolle",
+      slug: "commuter",
+      description: "High-reliability VRLA batteries for 100cc-125cc commuter bikes and scooters",
+      image: "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
     },
     {
-      id: "liner",
-      name: "Centrifugal Cylinder Liners",
-      brand: "FUJI",
-      slug: "liner",
-      description: "Centrifugally cast grey iron sleeves with diamond plateau crosshatching",
-      image: "https://ik.imagekit.io/lv0h5ou9z/products/cylinder-liner.jpg",
+      id: "performance",
+      name: "Performance & Sports (5Ah - 7Ah)",
+      brand: "Nexcolle",
+      slug: "performance",
+      description: "High-CCA batteries engineered for 150cc-250cc performance motorcycles",
+      image: "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
     },
     {
-      id: "valves",
-      name: "Precision Valve Sets",
-      brand: "FUJI",
-      slug: "valves",
-      description: "SUH-35 friction welded bimetallic valves with stellite-faced seats",
-      image: "https://ik.imagekit.io/lv0h5ou9z/products/valves.jpg",
+      id: "cruiser",
+      name: "Cruiser & Heavy (9Ah - 14Ah)",
+      brand: "Nexcolle",
+      slug: "cruiser",
+      description: "Heavy-duty power systems for 350cc+ cruisers and high-load touring bikes",
+      image: "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
     },
   ];
 
@@ -1028,10 +1064,10 @@ export async function getCategories(): Promise<CategoryItem[]> {
       list = data.map((c: any) => ({
         id: c.id,
         name: c.name,
-        brand: (c.brand as "Nexcolle" | "FUJI") || "FUJI",
+        brand: (c.brand as "Nexcolle") || "Nexcolle",
         slug: c.slug || c.id,
         description: c.description || "",
-        image: c.image || "https://ik.imagekit.io/lv0h5ou9z/products/piston.jpg",
+        image: c.image || "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
         productCount: c.product_count || 0,
       }));
     }
@@ -1048,10 +1084,10 @@ export async function getCategories(): Promise<CategoryItem[]> {
           .map((c: any) => ({
             id: c.id,
             name: c.name,
-            brand: (c.brand as "Nexcolle" | "FUJI") || "FUJI",
+            brand: (c.brand as "Nexcolle") || "Nexcolle",
             slug: c.slug || c.id,
             description: c.description || "",
-            image: c.image || (c.brand === "Nexcolle" ? "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg" : "https://ik.imagekit.io/lv0h5ou9z/products/piston.jpg"),
+            image: c.image || "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
             productCount: c.skuCount || c.productCount || 0,
           }));
         list = [...fresh, ...list];

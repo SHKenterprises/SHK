@@ -44,22 +44,26 @@ export function ProductCatalog({
   }, []);
 
   const tabs = [
-    { id: "all", label: "All Products" },
-    ...(categoriesList.length > 0
-      ? categoriesList.map((c) => ({
-          id: c.slug || c.id,
-          label: c.name,
-        }))
+    { id: "all", label: "All Batteries" },
+    ...(categoriesList.filter((c) => !["piston", "liner", "valves", "gasket"].includes(c.id) && !["piston", "liner", "valves", "gasket"].includes(c.slug || "")).length > 0
+      ? categoriesList
+          .filter((c) => !["piston", "liner", "valves", "gasket"].includes(c.id) && !["piston", "liner", "valves", "gasket"].includes(c.slug || ""))
+          .map((c) => ({
+            id: c.slug || c.id,
+            label: c.name,
+          }))
       : [
-          { id: "battery", label: "Batteries" },
-          { id: "piston", label: "Pistons & Assemblies" },
-          { id: "liner", label: "Cylinder Liners" },
-          { id: "valves", label: "Valves" },
+          { id: "battery", label: "All Batteries" },
+          { id: "commuter", label: "Commuter (2.5Ah - 4Ah)" },
+          { id: "performance", label: "Sports (5Ah - 7Ah)" },
+          { id: "cruiser", label: "Cruisers (9Ah - 14Ah)" },
         ]),
   ];
 
-  // Filtering
-  const filtered = productsList.filter((item) => {
+  // Filtering (Strictly exclude all engine items: pistons, liners, valves)
+  const filtered = productsList
+    .filter((item) => !["piston", "liner", "valves", "gasket"].includes(item.category?.toLowerCase()))
+    .filter((item) => {
     const matchesCat = activeCategory === "all" || item.category === activeCategory;
     if (!matchesCat) return false;
 
@@ -99,10 +103,10 @@ export function ProductCatalog({
         <div className="section-header" style={{ textAlign: "center", marginBottom: "36px" }}>
           <span className="kicker-pill">DISPATCH-READY INVENTORY</span>
           <h2 className="section-title" style={{ fontSize: "clamp(2rem, 3.4vw, 2.75rem)", fontWeight: 800, color: "#090c13", letterSpacing: "-0.03em" }}>
-            Featured Performance Spares
+            Nexcolle™ Two-Wheeler Batteries
           </h2>
           <p className="section-desc" style={{ color: "#64748b", maxWidth: "640px", margin: "10px auto 0 auto" }}>
-            Order authentic Nexcolle™ high-cranking AGM batteries and FUJI™ internal engine components with verified wholesale slab discounts.
+            Order authentic Nexcolle™ high-cranking VRLA AGM motorcycle batteries with 36-month warranty and verified wholesale slab discounts.
           </p>
         </div>
 

@@ -1621,19 +1621,8 @@ export function ProductPageClient({
                       onClick={() => router.push(`/products/${rel.slug}`)}
                     >
                       {/* Brand Corner Badge */}
-                      <span className={`product-badge-corner brand-${rel.brand.toLowerCase()}`}>
-                        {rel.brand === "FUJI" && (
-                          <span
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              background: "#f95716",
-                              display: "inline-block",
-                            }}
-                          />
-                        )}
-                        {rel.badge || rel.oemTag}
+                      <span className="product-badge-corner brand-nexcolle">
+                        {rel.badge || rel.oemTag || "Nexcolle™"}
                       </span>
 
                       {/* Wishlist Button */}

@@ -72,6 +72,11 @@ export function TopBar() {
               &bull; {data.marqueeText}
             </span>
           )}
+          {data.offerNotice && (
+            <span style={{ color: "var(--primary)", fontWeight: 700, fontSize: "0.78rem" }}>
+              &bull; {data.offerNotice}
+            </span>
+          )}
         </div>
 
         <div className="top-bar-right" style={{ display: "flex", alignItems: "center", gap: "16px" }}>

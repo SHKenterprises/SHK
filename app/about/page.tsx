@@ -53,7 +53,7 @@ export default function AboutPage() {
               <span className="gradient-text">India&apos;s Two-Wheeler Backbone</span>
             </h1>
             <p style={{ fontSize: "1.1rem", color: "#94a3b8", lineHeight: 1.7, maxWidth: "720px", margin: "0 auto" }}>
-              Founded with a mission to eliminate roadside breakdown risks, S.H.K ENTERPRISES is the authorized national distributor for <strong>Nexcolle&trade;</strong> high-crank batteries and <strong>FUJI&trade;</strong> internal engine spares.
+              Founded with a mission to eliminate roadside breakdown risks, S.H.K ENTERPRISES is the authorized national distributor for <strong>Nexcolle&trade;</strong> high-crank, maintenance-free motorcycle batteries.
             </p>
           </div>
         </section>
@@ -146,15 +146,15 @@ export default function AboutPage() {
                 </h2>
 
                 <p style={{ fontSize: "1rem", color: "#cbd5e1", lineHeight: 1.75, marginBottom: "16px" }}>
-                  Every mechanic in India knows the frustration of replacing a cylinder liner or piston only to face engine seizure, compression blow-by, or excessive oil burning within months.
+                  Every mechanic in India knows the frustration of installing low-grade batteries only to face starting failures, acid leakage, or premature dead cells within months.
                 </p>
                 <p style={{ fontSize: "1rem", color: "#94a3b8", lineHeight: 1.75, marginBottom: "28px" }}>
-                  S.H.K ENTERPRISES bridges this gap by directly distributing precision-manufactured parts crafted to strict Japanese metallurgy standards (<strong style={{ color: "#ffffff" }}>FUJI</strong>) and hermetically sealed maintenance-free calcium alloy battery tech (<strong style={{ color: "#ffffff" }}>Nexcolle</strong>).
+                  S.H.K ENTERPRISES bridges this gap by directly distributing 100% genuine, hermetically sealed maintenance-free calcium alloy battery tech (<strong style={{ color: "#ffffff" }}>Nexcolle™</strong>) built for extreme Indian weather and vibration conditions.
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                   {[
-                    "0.005mm CNC machining tolerance guarantee",
+                    "High cold cranking amperage (CCA) guarantee",
                     "100% factory leak-tested VRLA-AGM batteries",
                     "Same-day dispatch for all workshop orders",
                   ].map((text, idx) => (

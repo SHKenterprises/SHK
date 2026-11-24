@@ -8,9 +8,9 @@ import { AuthModal } from "@/components/AuthModal";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://shkauto.com"),
-  title: "S.H.K ENTERPRISES | E-Commerce Store for Batteries & Precision Engine Spare Parts",
+  title: "S.H.K ENTERPRISES | High-Performance Two-Wheeler Batteries",
   description:
-    "Order genuine Nexcolle™ High-Performance Two-Wheeler Batteries & FUJI™ Precision Engine Spares online. Direct pan-India dispatch and wholesale trade pricing.",
+    "Order 100% genuine Nexcolle™ High-Performance Maintenance-Free Two-Wheeler Batteries online. Direct pan-India dispatch and wholesale trade pricing.",
   icons: {
     icon: "/favicon.svg",
   },

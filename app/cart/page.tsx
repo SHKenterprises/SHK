@@ -167,7 +167,7 @@ export default function CartPage() {
                   Your Shopping Cart is Empty
                 </h2>
                 <p style={{ color: "#94a3b8", fontSize: "0.95rem", lineHeight: 1.6, maxWidth: "420px", margin: "0 auto 28px auto" }}>
-                  You haven&apos;t added any parts yet. Explore our high-CCA Nexcolle&trade; batteries and precision FUJI&trade; engine components.
+                  You haven&apos;t added any batteries yet. Explore our genuine high-CCA Nexcolle&trade; two-wheeler maintenance-free batteries.
                 </p>
 
                 <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>

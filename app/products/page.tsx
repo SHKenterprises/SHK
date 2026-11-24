@@ -24,9 +24,7 @@ function ProductsCatalogInner() {
   const [productsList, setProductsList] = useState<Product[]>(PRODUCTS);
   const [categoriesList, setCategoriesList] = useState<CategoryItem[]>([]);
   const [activeCategory, setActiveCategory] = useState(initialCategory);
-  const [selectedBrand, setSelectedBrand] = useState<"all" | "Nexcolle" | "FUJI">(
-    initialBrand === "Nexcolle" || initialBrand === "FUJI" ? initialBrand : "all"
-  );
+  const [selectedBrand, setSelectedBrand] = useState<"all" | "Nexcolle">("all");
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [sortBy, setSortBy] = useState<"recommended" | "price-asc" | "price-desc" | "rating">("recommended");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
@@ -53,33 +51,37 @@ function ProductsCatalogInner() {
     const cat = searchParams.get("category");
     if (cat) setActiveCategory(cat);
     const br = searchParams.get("brand");
-    if (br === "Nexcolle" || br === "FUJI") setSelectedBrand(br);
+    if (br === "Nexcolle") setSelectedBrand("Nexcolle");
     const q = searchParams.get("search");
     if (q) setSearchQuery(q);
   }, [searchParams]);
 
   const categoryTabs = [
-    { id: "all", label: "All Spares", count: productsList.length },
-    ...(categoriesList.length > 0
-      ? categoriesList.map((c) => ({
-          id: c.slug || c.id,
-          label: c.name,
-          count: productsList.filter(
-            (p) =>
-              p.category?.toLowerCase() === (c.slug || c.id).toLowerCase() ||
-              p.category?.toLowerCase() === c.id.toLowerCase()
-          ).length,
-        }))
+    { id: "all", label: "All Batteries", count: productsList.filter((p) => !["piston", "liner", "valves", "gasket"].includes(p.category)).length },
+    ...(categoriesList.filter((c) => !["piston", "liner", "valves", "gasket"].includes(c.id) && !["piston", "liner", "valves", "gasket"].includes(c.slug || "")).length > 0
+      ? categoriesList
+          .filter((c) => !["piston", "liner", "valves", "gasket"].includes(c.id) && !["piston", "liner", "valves", "gasket"].includes(c.slug || ""))
+          .map((c) => ({
+            id: c.slug || c.id,
+            label: c.name,
+            count: productsList.filter(
+              (p) =>
+                p.category?.toLowerCase() === (c.slug || c.id).toLowerCase() ||
+                p.category?.toLowerCase() === c.id.toLowerCase()
+            ).length,
+          }))
       : [
-          { id: "battery", label: "Nexcolle Batteries", count: productsList.filter((p) => p.category === "battery").length },
-          { id: "piston", label: "Pistons & Kits", count: productsList.filter((p) => p.category === "piston").length },
-          { id: "liner", label: "Cylinder Liners", count: productsList.filter((p) => p.category === "liner").length },
-          { id: "valves", label: "Engine Valves", count: productsList.filter((p) => p.category === "valves").length },
+          { id: "battery", label: "VRLA AGM Batteries", count: productsList.filter((p) => p.category === "battery").length },
+          { id: "commuter", label: "Commuter (2.5Ah - 4Ah)", count: productsList.filter((p) => p.category === "commuter" || (p.title && (p.title.includes("4Ah") || p.title.includes("2.5Ah")))).length },
+          { id: "performance", label: "Sports (5Ah - 7Ah)", count: productsList.filter((p) => p.category === "performance" || (p.title && (p.title.includes("5Ah") || p.title.includes("7Ah")))).length },
+          { id: "cruiser", label: "Cruisers (9Ah - 14Ah)", count: productsList.filter((p) => p.category === "cruiser" || (p.title && (p.title.includes("9Ah") || p.title.includes("14Ah")))).length },
         ]),
   ];
 
-  // Filter products
-  const filtered = productsList.filter((item) => {
+  // Filter products (Strictly exclude all engine items: pistons, liners, valves)
+  const filtered = productsList
+    .filter((p) => !["piston", "liner", "valves", "gasket"].includes(p.category?.toLowerCase()))
+    .filter((item) => {
     const matchesCat = activeCategory === "all" || item.category === activeCategory;
     if (!matchesCat) return false;
 
@@ -161,10 +163,10 @@ function ProductsCatalogInner() {
                   DISPATCH-READY CATALOG
                 </span>
                 <h1 style={{ fontSize: "clamp(2rem, 3.8vw, 2.9rem)", fontWeight: 800, color: "#ffffff", letterSpacing: "-0.03em" }}>
-                  Precision Motorcycle Spares &amp; Batteries
+                  Nexcolle™ High-Performance Batteries
                 </h1>
                 <p style={{ color: "#94a3b8", fontSize: "0.98rem", maxWidth: "620px", marginTop: "8px" }}>
-                  Direct online inventory of genuine <strong>Nexcolle™</strong> high-CCA AGM batteries and <strong>FUJI™</strong> Japanese internal engine components with wholesale slab pricing.
+                  Direct online inventory of genuine <strong>Nexcolle™</strong> high-CCA VRLA AGM motorcycle batteries with 36-month replacement warranty and wholesale slab pricing.
                 </p>
               </div>
 
@@ -250,28 +252,22 @@ function ProductsCatalogInner() {
                 )}
               </div>
 
-              {/* Brand Filter */}
+              {/* Brand Indicator */}
               <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                 <span style={{ fontSize: "0.82rem", color: "#64748b", fontWeight: 600 }}>Brand:</span>
-                {(["all", "Nexcolle", "FUJI"] as const).map((b) => (
-                  <button
-                    key={b}
-                    onClick={() => setSelectedBrand(b)}
-                    style={{
-                      padding: "7px 14px",
-                      borderRadius: "var(--radius-full)",
-                      fontSize: "0.8rem",
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      border: selectedBrand === b ? "1px solid var(--primary)" : "1px solid #cbd5e1",
-                      background: selectedBrand === b ? "var(--primary)" : "#ffffff",
-                      color: selectedBrand === b ? "#ffffff" : "#1e293b",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    {b === "all" ? "All Brands" : b}
-                  </button>
-                ))}
+                <span
+                  style={{
+                    padding: "7px 14px",
+                    borderRadius: "var(--radius-full)",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    border: "1px solid var(--primary)",
+                    background: "rgba(249, 87, 22, 0.1)",
+                    color: "var(--primary)",
+                  }}
+                >
+                  Nexcolle™ Genuine
+                </span>
               </div>
 
               {/* Sort Dropdown */}
@@ -396,19 +392,8 @@ function ProductsCatalogInner() {
                       onClick={() => router.push(`/products/${item.slug}`)}
                     >
                       {/* Brand Corner Badge */}
-                      <span className={`product-badge-corner brand-${item.brand.toLowerCase()}`}>
-                        {item.brand === "FUJI" && (
-                          <span
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              background: "#f95716",
-                              display: "inline-block",
-                            }}
-                          />
-                        )}
-                        {item.badge}
+                      <span className="product-badge-corner brand-nexcolle">
+                        {item.badge || "Nexcolle™"}
                       </span>
 
                       {/* Wishlist Button */}

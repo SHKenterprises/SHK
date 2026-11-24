@@ -659,7 +659,7 @@ export default function ProfilePage() {
 
                           <div style={{ padding: "14px 0", fontSize: "0.9rem", color: "#cbd5e1" }}>
                             <div>• <strong>2x Nexcolle™ Pro-Power 12V 4Ah</strong> Maintenance-Free AGM Battery</div>
-                            <div>• <strong>1x FUJI™ Hero Splendor</strong> 97.2cc Cylinder Liner &amp; Piston Kit</div>
+                            <div>• <strong>1x Nexcolle™ Heavy-Duty 12V 5Ah</strong> VRLA Motorcycle Battery</div>
                           </div>
 
                           <div style={{ display: "flex", gap: "12px", paddingTop: "8px" }}>

@@ -11,23 +11,23 @@ export function BrandPillars({ onOpenQuote }: BrandPillarsProps) {
     <section className="section brands-section" id="brands">
       <div className="container">
         <div className="section-header">
-          <span className="pill-tag">Two Brands. One Standard of Excellence.</span>
+          <span className="pill-tag">Nexcolle™ Power Systems</span>
           <h2 className="section-title">Engineered For Everyday Dominance</h2>
           <p className="section-desc">
-            We partner exclusively with verified manufacturing specialists to supply mechanics and dealers with components that eliminate breakdown risks.
+            We partner exclusively with verified battery manufacturing specialists to supply mechanics and dealers with power systems that eliminate breakdown risks.
           </p>
         </div>
 
         <div className="brands-split">
-          {/* Pillar 1: Nexcolle */}
+          {/* Pillar 1: Nexcolle Commuter Series */}
           <article className="brand-pillar-card">
             <div className="brand-pillar-header battery-theme">
-              <span className="pillar-tagline">Advanced Power Systems</span>
+              <span className="pillar-tagline">Commuter &amp; Everyday Series</span>
               <h3 className="pillar-name">
-                Nexcolle&trade; <small>Two-Wheeler Batteries</small>
+                Nexcolle&trade; <small>2.5Ah &amp; 4Ah Batteries</small>
               </h3>
               <p className="pillar-desc">
-                Engineered with high cold-cranking amps (CCA), ultra-dense calcium alloy grids, and spill-proof VRLA-AGM design for instantaneous starts in all seasons.
+                Engineered with high cold-cranking amps (CCA), ultra-dense calcium alloy grids, and spill-proof VRLA-AGM design for instantaneous starts in 100cc-125cc motorcycles and scooters.
               </p>
             </div>
 
@@ -63,34 +63,34 @@ export function BrandPillars({ onOpenQuote }: BrandPillarsProps) {
               </ul>
 
               <div className="pillar-media-box">
-                <img src="/images/battery.jpg" alt="Nexcolle Battery Showcase" />
+                <img src="/images/battery.jpg" alt="Nexcolle Commuter Battery Showcase" />
               </div>
 
               {onOpenQuote ? (
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => onOpenQuote("Nexcolle Batteries")}
+                  onClick={() => onOpenQuote("Nexcolle Commuter Batteries")}
                 >
-                  Inquire Nexcolle Range
+                  Inquire Commuter Range
                 </button>
               ) : (
                 <Link href="/contact" className="btn btn-primary" style={{ textAlign: "center" }}>
-                  Inquire Nexcolle Range
+                  Inquire Commuter Range
                 </Link>
               )}
             </div>
           </article>
 
-          {/* Pillar 2: FUJI Spares */}
+          {/* Pillar 2: Nexcolle Heavy-Duty & Cruiser Series */}
           <article className="brand-pillar-card">
-            <div className="brand-pillar-header spares-theme">
-              <span className="pillar-tagline">Precision Internal Engine Spares</span>
+            <div className="brand-pillar-header battery-theme" style={{ borderColor: "rgba(59, 130, 246, 0.3)" }}>
+              <span className="pillar-tagline">Sports &amp; Cruiser Series</span>
               <h3 className="pillar-name">
-                FUJI&trade; <small>Engine Spare Parts</small>
+                Nexcolle&trade; <small>5Ah, 7Ah, 9Ah &amp; 14Ah</small>
               </h3>
               <p className="pillar-desc">
-                Micron-accurate cylinder liners, forged pistons, stellite-faced valves, and multi-layer gaskets designed to restore factory compression and thermal stability.
+                Heavy-duty VRLA AGM batteries engineered for 150cc to 650cc sports, touring, and cruiser motorcycles requiring high cranking current and deep discharge endurance.
               </p>
             </div>
 
@@ -101,8 +101,8 @@ export function BrandPillars({ onOpenQuote }: BrandPillarsProps) {
                     <Icon name="check" />
                   </div>
                   <div>
-                    <strong>Centrifugal Cast Iron Liners</strong>
-                    <p>Plateau-honed internal bore for rapid oil retention and zero scuffing.</p>
+                    <strong>High Cold Cranking (Up to 260 CCA)</strong>
+                    <p>Effortless turn-over for large displacement singles and twins.</p>
                   </div>
                 </li>
                 <li className="feature-check-item">
@@ -110,8 +110,8 @@ export function BrandPillars({ onOpenQuote }: BrandPillarsProps) {
                     <Icon name="check" />
                   </div>
                   <div>
-                    <strong>Heat-Treated Hypereutectic Pistons</strong>
-                    <p>Minimal thermal expansion prevents engine seizure under high load.</p>
+                    <strong>High-Load Electrical Stability</strong>
+                    <p>Maintains steady 12V output for auxiliary lighting and digital consoles.</p>
                   </div>
                 </li>
                 <li className="feature-check-item">
@@ -119,32 +119,27 @@ export function BrandPillars({ onOpenQuote }: BrandPillarsProps) {
                     <Icon name="check" />
                   </div>
                   <div>
-                    <strong>Multi-Layer Steel (MLS) Head Gaskets</strong>
-                    <p>Absolute blow-out resistance under high combustion pressure.</p>
+                    <strong>36-Month Nationwide Guarantee</strong>
+                    <p>Direct hassle-free B2B replacement for registered garages.</p>
                   </div>
                 </li>
               </ul>
 
-              <div className="parts-grid-preview">
-                <img src="/images/piston-conrod.jpg" alt="Piston Assembly" />
-                <img src="/images/cylinder-liner.jpg" alt="Cylinder Liner" />
-                <img src="/images/valves.jpg" alt="Valves" />
-                <img src="/images/head-gasket.jpg" alt="Head Gasket" />
-                <img src="/images/gasket-set.jpg" alt="Gasket Set" />
-                <img src="/images/gasket-cloth.jpg" alt="Gasket Cloth" />
+              <div className="pillar-media-box">
+                <img src="/images/battery.jpg" alt="Nexcolle Heavy-Duty Battery Series" />
               </div>
 
               {onOpenQuote ? (
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => onOpenQuote("FUJI Engine Spares")}
+                  onClick={() => onOpenQuote("Nexcolle High-Power Batteries")}
                 >
-                  Inquire FUJI Components
+                  Inquire High-Power Range
                 </button>
               ) : (
                 <Link href="/contact" className="btn btn-primary" style={{ textAlign: "center" }}>
-                  Inquire FUJI Components
+                  Inquire High-Power Range
                 </Link>
               )}
             </div>

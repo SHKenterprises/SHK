@@ -402,11 +402,11 @@ export default function ContactPage() {
                           background: "#fff",
                         }}
                       >
-                        <option value="Nexcolle Batteries">Nexcolle Batteries</option>
-                        <option value="FUJI Pistons & Con-Rods">FUJI Pistons &amp; Con-Rods</option>
-                        <option value="FUJI Cylinder Liners">FUJI Cylinder Liners</option>
-                        <option value="FUJI Valves & Gaskets">FUJI Valves &amp; Gaskets</option>
-                        <option value="Bulk Wholesale Catalog">Complete Bulk Catalog</option>
+                        <option value="Nexcolle Batteries">Nexcolle Batteries (All Series)</option>
+                        <option value="Nexcolle Commuter 2.5Ah-4Ah">Commuter Series (2.5Ah - 4Ah)</option>
+                        <option value="Nexcolle Sports 5Ah-7Ah">Performance Series (5Ah - 7Ah)</option>
+                        <option value="Nexcolle Cruiser 9Ah-14Ah">Cruiser &amp; Heavy Series (9Ah - 14Ah)</option>
+                        <option value="Bulk Wholesale Catalog">Complete Bulk Wholesale Supply</option>
                       </select>
                     </div>
                   </div>

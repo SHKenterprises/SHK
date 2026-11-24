@@ -56,7 +56,6 @@ export function Header({ onOpenQuote }: HeaderProps) {
             <div className="logo-title">
               S.H.K<span> ENTERPRISES</span>
             </div>
-            <div className="logo-sub">Batteries &amp; Engine Spares</div>
           </div>
         </Link>
 

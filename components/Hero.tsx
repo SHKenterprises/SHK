@@ -129,7 +129,7 @@ export function Hero({ onOpenQuote, badge, headline, subtitle, slides }: HeroPro
             >
               {currentSubtitle || (
                 <>
-                  Genuine <strong>Nexcolle&trade;</strong> high-CCA motorcycle batteries and <strong>FUJI&trade;</strong> precision engine components. Built for extreme heat, heavy duty, and maximum reliability.
+                  Genuine <strong>Nexcolle&trade;</strong> high-CCA motorcycle batteries with 36-month warranty. Built for extreme heat, vibration resistance, and maximum starting reliability.
                 </>
               )}
             </p>
@@ -231,25 +231,25 @@ export function Hero({ onOpenQuote, badge, headline, subtitle, slides }: HeroPro
                 <span className="hero-float-label">Nexcolle™ AGM</span>
               </Link>
 
-              <Link href="/products?category=piston" className="hero-float-col" title="FUJI™ Forged Pistons">
+              <Link href="/products" className="hero-float-col" title="Nexcolle™ 4Ah Commuter Battery">
                 <div className="hero-float-thumb">
-                  <img src="/images/hero-card-piston.jpg" alt="FUJI™ Piston Kit" />
+                  <img src="https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg" alt="Nexcolle™ 4Ah Battery" />
                 </div>
-                <span className="hero-float-label">FUJI™ Pistons</span>
+                <span className="hero-float-label">4Ah Commuter</span>
               </Link>
 
-              <Link href="/products?category=liner" className="hero-float-col" title="FUJI™ Centrifugal Liners">
+              <Link href="/products" className="hero-float-col" title="Nexcolle™ 5Ah Performance Battery">
                 <div className="hero-float-thumb">
-                  <img src="/images/hero-card-liner.jpg" alt="Centrifugal Cylinder Liner" />
+                  <img src="https://ik.imagekit.io/lv0h5ou9z/products/battery-5ah.jpg" alt="Nexcolle™ 5Ah Battery" />
                 </div>
-                <span className="hero-float-label">Centrifugal Liners</span>
+                <span className="hero-float-label">5Ah Sports</span>
               </Link>
 
-              <Link href="/products?category=valves" className="hero-float-col" title="FUJI™ Valve Sets">
+              <Link href="/products" className="hero-float-col" title="Nexcolle™ 9Ah/14Ah Cruiser Battery">
                 <div className="hero-float-thumb">
-                  <img src="/images/hero-card-valves.jpg" alt="High-Heat Engine Valves" />
+                  <img src="https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg" alt="Nexcolle™ High-Torque Battery" />
                 </div>
-                <span className="hero-float-label">Valve Sets</span>
+                <span className="hero-float-label">9Ah/14Ah Cruiser</span>
               </Link>
             </div>
           </div>

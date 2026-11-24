@@ -30,11 +30,10 @@ export function Footer({ onSelectCategory }: FooterProps) {
                 <div className="logo-title" style={{ color: "#fff" }}>
                   S.H.K<span style={{ color: "var(--primary)" }}> ENTERPRISES</span>
                 </div>
-                <div className="logo-sub">Precision Automotive Spares</div>
               </div>
             </div>
             <p>
-              Authorized supplier and distributor of Nexcolle&trade; High-Performance Batteries and FUJI&trade; Precision Engine Spares for two-wheeler workshops, dealerships, and fleet services across India.
+              Authorized supplier and distributor of Nexcolle&trade; High-Performance Batteries for two-wheeler workshops, dealerships, and fleet services across India.
             </p>
             <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
               <a

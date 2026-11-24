@@ -120,7 +120,7 @@ export default function Home() {
           onOpenQuote={handleOpenQuote}
         />
 
-        {/* SECTION 3: Brand Pillars Spotlight (Nexcolle & FUJI) */}
+        {/* SECTION 3: Feature Showcase (Nexcolle Battery Power Systems) */}
         {homeCustom.showBrandPillars && (
           <FeatureShowcase onSelectCategory={handleSelectCategory} />
         )}

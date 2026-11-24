@@ -145,7 +145,7 @@ function TrackOrderContent() {
             Track Your Parts Shipment
           </h1>
           <p style={{ color: "var(--text-muted)", fontSize: "0.95rem" }}>
-            Real-time GPS tracking for Nexcolle batteries and FUJI precision spares dispatches.
+            Real-time GPS tracking for Nexcolle™ battery shipments and bulk garage dispatches.
           </p>
         </div>
 

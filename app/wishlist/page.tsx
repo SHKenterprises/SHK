@@ -179,7 +179,7 @@ export default function WishlistPage() {
                   Your Wishlist is Empty
                 </h2>
                 <p style={{ color: "#94a3b8", fontSize: "0.95rem", lineHeight: 1.6, maxWidth: "420px", margin: "0 auto 28px auto" }}>
-                  Click the heart icon on any Nexcolle&trade; battery or FUJI&trade; engine part to bookmark it for later.
+                  Click the heart icon on any Nexcolle&trade; two-wheeler battery to bookmark it for later.
                 </p>
 
                 <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
@@ -231,19 +231,8 @@ export default function WishlistPage() {
                       onClick={() => router.push(`/products/${product.slug}`)}
                     >
                       {/* Brand Corner Badge */}
-                      <span className={`product-badge-corner brand-${product.brand.toLowerCase()}`}>
-                        {product.brand === "FUJI" && (
-                          <span
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              background: "#f95716",
-                              display: "inline-block",
-                            }}
-                          />
-                        )}
-                        {product.badge}
+                      <span className="product-badge-corner brand-nexcolle">
+                        {product.badge || "Nexcolle™"}
                       </span>
 
                       {/* Wishlist Button (Remove from Wishlist) */}

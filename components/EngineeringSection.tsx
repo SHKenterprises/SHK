@@ -6,31 +6,31 @@ export function EngineeringSection() {
     <section className="engineering-section" id="engineering">
       <div className="container">
         <div className="section-header">
-          <span className="pill-tag dark">Inside The Metal</span>
-          <h2 className="section-title">Anatomy of Engine Reliability</h2>
+          <span className="pill-tag dark">Inside The Power Cell</span>
+          <h2 className="section-title">Anatomy of Battery Reliability</h2>
           <p className="section-desc">
-            Why professional mechanics choose FUJI over cheap market replacements.
+            Why professional mechanics choose Nexcolle™ VRLA AGM over conventional market batteries.
           </p>
         </div>
 
         <div className="eng-grid">
           <div className="eng-image-card">
             <img
-              src="/images/cylinder-liner-cutaway.jpg"
-              alt="Cylinder Liner Cutaway Anatomy"
+              src="/images/battery.jpg"
+              alt="Nexcolle AGM Battery Internal Anatomy"
             />
           </div>
 
           <div className="eng-features-list">
             <div className="eng-feature-box">
               <div className="eng-icon-circle">
-                <Icon name="gear" />
+                <Icon name="bolt" />
               </div>
               <div>
-                <h4>Centrifugal Casting Matrix</h4>
+                <h4>High Cold Cranking Amperage (CCA)</h4>
                 <p>
-                  Dense, pore-free gray cast iron prevents micro-cracks and maintains
-                  bore roundness under severe thermodynamic expansion.
+                  Ultra-dense calcium alloy lead grids deliver immediate high-amperage
+                  power to spin starter motors instantly even on cold winter mornings.
                 </p>
               </div>
             </div>
@@ -40,23 +40,23 @@ export function EngineeringSection() {
                 <Icon name="shield-check" />
               </div>
               <div>
-                <h4>Anti-Scuff Skirt Coating</h4>
+                <h4>Spill-Proof VRLA-AGM Construction</h4>
                 <p>
-                  Molybdenum disulfide impregnated skirt on FUJI pistons ensures
-                  seamless break-in without cylinder wall scoring.
+                  Hermetically factory-sealed with micro-porous glass mat separators.
+                  Zero acid leaks, zero electrolyte evaporation, and 100% maintenance-free.
                 </p>
               </div>
             </div>
 
             <div className="eng-feature-box">
               <div className="eng-icon-circle">
-                <Icon name="bolt" />
+                <Icon name="check" />
               </div>
               <div>
-                <h4>High-Thermal Flow Metallurgy</h4>
+                <h4>Heavy Vibration &amp; Pothole Resistance</h4>
                 <p>
-                  Rapid heat conduction away from the combustion bowl prevents
-                  pre-ignition knocking and valve deformation under peak RPMs.
+                  Reinforced polypropylene casing and anchored plate groups built
+                  to absorb harsh Indian road shocks without internal cell failure.
                 </p>
               </div>
             </div>

@@ -11,27 +11,27 @@ export function CategoryStrip({ onSelectCategory }: CategoryStripProps) {
   const defaultCategories = [
     {
       id: "battery",
-      title: "Batteries & Power Systems",
+      title: "All Two-Wheeler Batteries",
       img: "/images/battery.jpg",
-      alt: "Batteries",
+      alt: "All Batteries",
     },
     {
-      id: "piston",
-      title: "Forged & Cast Pistons",
-      img: "/images/piston-conrod.jpg",
-      alt: "Pistons",
+      id: "commuter",
+      title: "Commuter (2.5Ah - 4Ah)",
+      img: "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
+      alt: "Commuter Series",
     },
     {
-      id: "liner",
-      title: "Centrifugal Cylinder Liners",
-      img: "/images/cylinder-liner.jpg",
-      alt: "Cylinder Liners",
+      id: "performance",
+      title: "Sports & Performance (5Ah - 7Ah)",
+      img: "https://ik.imagekit.io/lv0h5ou9z/products/battery-5ah.jpg",
+      alt: "Performance Series",
     },
     {
-      id: "valves",
-      title: "Precision Valve Sets",
-      img: "/images/valves.jpg",
-      alt: "Engine Valves",
+      id: "cruiser",
+      title: "Cruisers & Royal Enfield (9Ah - 14Ah)",
+      img: "https://ik.imagekit.io/lv0h5ou9z/products/battery.jpg",
+      alt: "Cruiser Series",
     },
   ];
 

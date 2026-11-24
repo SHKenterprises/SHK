@@ -9,6 +9,7 @@ import { PRODUCTS, Product } from "@/data/products";
 import {
   getAllOrders,
   updateOrderStatus,
+  deleteOrder,
   updateProductStock,
   getAllInquiries,
   updateInquiryStatus,
@@ -68,7 +69,7 @@ interface QuoteInquiry {
 interface AdminCategory {
   id: string;
   name: string;
-  brand: "Nexcolle" | "FUJI";
+  brand: "Nexcolle" | string;
   slug: string;
   skuCount: number;
   description: string;
@@ -186,7 +187,7 @@ export default function AdminDashboardPage() {
   const [categories, setCategories] = useState<AdminCategory[]>([]);
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [newCatName, setNewCatName] = useState("");
-  const [newCatBrand, setNewCatBrand] = useState<"Nexcolle" | "FUJI">("FUJI");
+  const [newCatBrand, setNewCatBrand] = useState<"Nexcolle" | string>("Nexcolle");
   const [newCatSlug, setNewCatSlug] = useState("");
   const [newCatDesc, setNewCatDesc] = useState("");
   const [newCatImage, setNewCatImage] = useState("");
@@ -194,7 +195,7 @@ export default function AdminDashboardPage() {
   // Edit Category State
   const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
   const [editCatName, setEditCatName] = useState("");
-  const [editCatBrand, setEditCatBrand] = useState<"Nexcolle" | "FUJI">("FUJI");
+  const [editCatBrand, setEditCatBrand] = useState<"Nexcolle" | string>("Nexcolle");
   const [editCatSlug, setEditCatSlug] = useState("");
   const [editCatDesc, setEditCatDesc] = useState("");
   const [showEditCategoryModal, setShowEditCategoryModal] = useState(false);
@@ -209,10 +210,10 @@ export default function AdminDashboardPage() {
   const [newStockVal, setNewStockVal] = useState<number>(0);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [newProdTitle, setNewProdTitle] = useState("");
-  const [newProdBrand, setNewProdBrand] = useState<"Nexcolle" | "FUJI">("FUJI");
-  const [newProdCategory, setNewProdCategory] = useState<string>("piston");
-  const [newProdPrice, setNewProdPrice] = useState(850);
-  const [newProdStock, setNewProdStock] = useState(25);
+  const [newProdBrand, setNewProdBrand] = useState<"Nexcolle" | string>("Nexcolle");
+  const [newProdCategory, setNewProdCategory] = useState<string>("battery");
+  const [newProdPrice, setNewProdPrice] = useState(1650);
+  const [newProdStock, setNewProdStock] = useState(50);
   const [newProdImage, setNewProdImage] = useState("");
 
   // 3. Orders State
@@ -222,8 +223,8 @@ export default function AdminDashboardPage() {
       customerName: "Md Irshad",
       workshopName: "Apex Moto Works, Patna",
       date: "Today, 11:42 AM",
-      items: "Nexcolle Pro-Power 12V 4Ah + FUJI Piston Kit",
-      units: 4,
+      items: "Nexcolle Pro-Power 12V 4Ah Battery (x3)",
+      units: 3,
       total: 5100,
       paymentMethod: "UPI / Net Banking",
       status: "Dispatched",
@@ -234,7 +235,7 @@ export default function AdminDashboardPage() {
       customerName: "Deepak Sharma",
       workshopName: "Sharma Auto Works, Pune",
       date: "Yesterday",
-      items: "Nexcolle Heavy-Duty 12V 5Ah VRLA Battery",
+      items: "Nexcolle Heavy-Duty 12V 5Ah VRLA Battery (x10)",
       units: 10,
       total: 16500,
       paymentMethod: "B2B Trade Invoice",
@@ -246,8 +247,8 @@ export default function AdminDashboardPage() {
       customerName: "Manoj Kumar",
       workshopName: "SpeedPoint Performance, Bengaluru",
       date: "09 Nov 2026",
-      items: "FUJI Centrifugal Cast Iron Cylinder Liner",
-      units: 6,
+      items: "Nexcolle Ultra-Crank 12V 7Ah Battery (x2)",
+      units: 2,
       total: 5880,
       paymentMethod: "Razorpay Gateway",
       status: "Delivered",
@@ -258,8 +259,8 @@ export default function AdminDashboardPage() {
       customerName: "Vikram Rathi",
       workshopName: "Rathi Motors & Spares, Jaipur",
       date: "08 Nov 2026",
-      items: "FUJI Precision Valve Set + Head Gasket",
-      units: 12,
+      items: "Nexcolle Touring-Master 12V 9Ah Battery (x2)",
+      units: 2,
       total: 8280,
       paymentMethod: "Cash on Delivery",
       status: "Processing",
@@ -377,33 +378,33 @@ export default function AdminDashboardPage() {
     },
     {
       id: "FAQ-2",
-      question: "What metallurgy is used in FUJI engine pistons?",
-      answer: "FUJI pistons are manufactured from Japanese JIS AC8A high-silicon hypereutectic aluminum alloy with a proprietary micro-tin skirt coating and gas-nitrided compression rings.",
-      category: "Engine Spares",
+      question: "What makes Nexcolle VRLA AGM batteries maintenance-free?",
+      answer: "Nexcolle batteries feature an advanced Absorbent Glass Mat (AGM) separator and recombinant lid technology that re-combines oxygen and hydrogen, eliminating electrolyte loss and acid leakage permanently.",
+      category: "Batteries",
     },
     {
       id: "FAQ-3",
       question: "How do registered workshop garages qualify for wholesale tier pricing?",
-      answer: "Garages and retailers registered with valid GST or commercial workshop address automatically access 12%, 20%, and 28% volume rebate slabs directly in their cart.",
+      answer: "Garages and retailers registered with valid GST or commercial workshop address automatically access 10%, 18%, and 25% volume rebate slabs directly in their cart.",
       category: "B2B Trade",
     },
     {
       id: "FAQ-4",
-      question: "What is the warranty policy on battery and engine component defects?",
-      answer: "Nexcolle batteries include a 36-month replacement warranty. FUJI engine spares carry a 12-month manufacturing defect replacement guarantee.",
+      question: "What is the warranty policy on Nexcolle batteries?",
+      answer: "Nexcolle batteries include a comprehensive 36-month warranty (24 months free replacement + 12 months pro-rata) with hassle-free claim processing for verified partners.",
       category: "Compatibility",
     },
   ]);
   const [showAddFaqModal, setShowAddFaqModal] = useState(false);
   const [newFaqQ, setNewFaqQ] = useState("");
   const [newFaqA, setNewFaqA] = useState("");
-  const [newFaqCat, setNewFaqCat] = useState<AdminFAQ["category"]>("Engine Spares");
+  const [newFaqCat, setNewFaqCat] = useState<AdminFAQ["category"]>("Batteries");
 
   // 13. Home Customization State
   const [homeCustom, setHomeCustom] = useState({
     heroHeadline: "Power Every Ride. Engineered to Last.",
-    heroSubtitle: "Genuine Nexcolle™ high-CCA motorcycle batteries and FUJI™ precision engine components. Built for extreme heat, heavy duty, and maximum reliability.",
-    heroBadge: "OEM-GRADE ENGINEERING & SPARES",
+    heroSubtitle: "Genuine Nexcolle™ high-CCA motorcycle batteries engineered for extreme heat, heavy duty, and instantaneous ignition.",
+    heroBadge: "100% GENUINE TWO-WHEELER BATTERIES",
     showCompatibilityMatrix: true,
     showBrandPillars: true,
     showWholesaleSlabs: true,
@@ -429,28 +430,32 @@ export default function AdminDashboardPage() {
 
       // Load live orders from Supabase
       getAllOrders().then((dbOrders) => {
-        if (dbOrders && dbOrders.length > 0) {
-          const mapped: AdminOrder[] = dbOrders.map((o) => ({
-            id: o.order_number || o.id,
-            customerName: o.customer_name,
-            workshopName: o.garage_name || "Direct Wholesale Buyer",
-            date: new Date(o.created_at).toLocaleDateString("en-IN", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            }),
-            items: Array.isArray(o.items) && o.items[0]?.product?.title
-              ? `${o.items[0].product.title} ${o.items.length > 1 ? `(+${o.items.length - 1} more)` : ""}`
-              : "OEM Components",
-            units: Array.isArray(o.items)
-              ? o.items.reduce((sum: number, it: any) => sum + (it.quantity || 1), 0)
-              : 1,
-            total: Number(o.total || 0),
-            paymentMethod: (o.payment_method || "UPI").toUpperCase(),
-            status: (o.status as any) || "Processing",
-            paymentStatus: "Paid",
-          }));
-          setOrders(mapped);
+        if (Array.isArray(dbOrders)) {
+          if (dbOrders.length === 0) {
+            setOrders([]);
+          } else {
+            const mapped: AdminOrder[] = dbOrders.map((o) => ({
+              id: o.order_number || o.id,
+              customerName: o.customer_name,
+              workshopName: o.garage_name || "Direct Wholesale Buyer",
+              date: new Date(o.created_at).toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              }),
+              items: Array.isArray(o.items) && o.items[0]?.product?.title
+                ? `${o.items[0].product.title} ${o.items.length > 1 ? `(+${o.items.length - 1} more)` : ""}`
+                : "OEM Components",
+              units: Array.isArray(o.items)
+                ? o.items.reduce((sum: number, it: any) => sum + (it.quantity || 1), 0)
+                : 1,
+              total: Number(o.total || 0),
+              paymentMethod: (o.payment_method || "UPI").toUpperCase(),
+              status: (o.status as any) || "Processing",
+              paymentStatus: "Paid",
+            }));
+            setOrders(mapped);
+          }
         }
       });
 
@@ -491,7 +496,7 @@ export default function AdminDashboardPage() {
             name: c.name,
             brand: c.brand,
             slug: c.slug,
-            skuCount: 0,
+            skuCount: c.productCount || PRODUCTS.filter((p) => p.category === c.id || p.category === c.slug).length,
             description: c.description,
             status: "Active",
             displayOrder: idx + 1,
@@ -789,16 +794,16 @@ export default function AdminDashboardPage() {
     { id: "dashboard", label: "Dashboard", icon: "grid" },
     { id: "categories", label: "Categories", icon: "layers", count: categories.length },
     { id: "products", label: "Products", icon: "package", count: inventoryList.length },
-    { id: "orders", label: "Orders", icon: "cart", count: orders.filter((o) => o.status === "Processing").length },
+    { id: "orders", label: "Orders", icon: "cart", count: orders.length },
     { id: "home-customization", label: "Home Customization", icon: "layout" },
-    { id: "customers", label: "Customers", icon: "users" },
-    { id: "reviews", label: "Reviews", icon: "star" },
-    { id: "inquiries", label: "Inquiries", icon: "message-square", count: quotes.filter((q) => q.status === "Pending").length },
-    { id: "hero-slides", label: "Hero Slides", icon: "image" },
+    { id: "customers", label: "Customers", icon: "users", count: customers.length },
+    { id: "reviews", label: "Reviews", icon: "star", count: reviews.length },
+    { id: "inquiries", label: "Inquiries", icon: "message-square", count: quotes.length },
+    { id: "hero-slides", label: "Hero Slides", icon: "image", count: heroSlides.length },
     { id: "announcements", label: "Announcements", icon: "megaphone" },
-    { id: "coupons", label: "Coupons", icon: "tag" },
+    { id: "coupons", label: "Coupons", icon: "tag", count: coupons.length },
     { id: "delivery-settings", label: "Delivery Settings", icon: "truck" },
-    { id: "faqs", label: "Global FAQs", icon: "help-circle" },
+    { id: "faqs", label: "Global FAQs", icon: "help-circle", count: faqs.length },
   ];
 
   // Dynamic Dashboard Analytics & Metrics
@@ -886,17 +891,21 @@ export default function AdminDashboardPage() {
     return days;
   }, [todaySales, sevenDaysSales, totalRevenue]);
 
-  // Dynamic Top Selling Products
+  // Dynamic Top Selling Products (Nexcolle Two-Wheeler Batteries)
   const topProducts = useMemo(() => {
     if (!inventoryList || inventoryList.length === 0) return [];
+    const batteryProds = inventoryList.filter(
+      (p) => !["piston", "liner", "valves", "gasket"].includes(p.category) && p.brand !== "FUJI"
+    );
+    const list = batteryProds.length > 0 ? batteryProds : inventoryList;
 
-    return inventoryList.slice(0, 3).map((prod, idx) => {
+    return list.slice(0, 3).map((prod, idx) => {
       const unitsSold = idx === 0 ? 120 : idx === 1 ? 85 : 42;
       const revenue = unitsSold * prod.price;
       return {
         id: prod.id,
         name: prod.title,
-        brand: prod.brand,
+        brand: "Nexcolle",
         unitsSold,
         revenue,
         percentage: idx === 0 ? 85 : idx === 1 ? 65 : 40,
@@ -1979,7 +1988,6 @@ export default function AdminDashboardPage() {
                           onChange={(e) => setNewCatBrand(e.target.value as any)}
                           style={{ width: "100%", backgroundColor: "#0d121c", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "10px", color: "#ffffff", fontSize: "0.88rem", marginTop: "4px" }}
                         >
-                          <option value="FUJI">FUJI (Engine Components)</option>
                           <option value="Nexcolle">Nexcolle (Batteries)</option>
                         </select>
                       </div>
@@ -2092,7 +2100,6 @@ export default function AdminDashboardPage() {
                           onChange={(e) => setEditCatBrand(e.target.value as any)}
                           style={{ width: "100%", backgroundColor: "#0d121c", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "10px", color: "#ffffff", fontSize: "0.88rem", marginTop: "4px" }}
                         >
-                          <option value="FUJI">FUJI (Engine Components)</option>
                           <option value="Nexcolle">Nexcolle (Batteries)</option>
                         </select>
                       </div>
@@ -2202,7 +2209,6 @@ export default function AdminDashboardPage() {
                 >
                   <option value="all">All Brands</option>
                   <option value="Nexcolle">Nexcolle</option>
-                  <option value="FUJI">FUJI</option>
                 </select>
 
                 <select
@@ -2336,7 +2342,7 @@ export default function AdminDashboardPage() {
                           type="text"
                           value={newProdTitle}
                           onChange={(e) => setNewProdTitle(e.target.value)}
-                          placeholder="e.g. FUJI 125cc Bore Kit"
+                          placeholder="e.g. Nexcolle Pro-Power 12V 4Ah"
                           style={{ width: "100%", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "10px", color: "#ffffff", fontSize: "0.88rem" }}
                         />
                       </div>
@@ -2348,7 +2354,6 @@ export default function AdminDashboardPage() {
                             onChange={(e) => setNewProdBrand(e.target.value as any)}
                             style={{ width: "100%", backgroundColor: "#0d121c", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "10px", color: "#ffffff", fontSize: "0.88rem" }}
                           >
-                            <option value="FUJI">FUJI</option>
                             <option value="Nexcolle">Nexcolle</option>
                           </select>
                         </div>
@@ -2587,9 +2592,21 @@ export default function AdminDashboardPage() {
                         <td style={{ padding: "16px 20px", textAlign: "right" }}>
                           <button
                             onClick={() => showToast(`Invoice generated for order #${o.id}`)}
-                            style={{ background: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(255, 255, 255, 0.1)", color: "#cbd5e1", padding: "6px 12px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 700, cursor: "pointer" }}
+                            style={{ background: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(255, 255, 255, 0.1)", color: "#cbd5e1", padding: "6px 12px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", marginRight: "6px" }}
                           >
                             Invoice
+                          </button>
+                          <button
+                            onClick={async () => {
+                              if (confirm(`Are you sure you want to delete order #${o.id}?`)) {
+                                setOrders((prev) => prev.filter((item) => item.id !== o.id));
+                                showToast(`Order #${o.id} deleted`);
+                                await deleteOrder(o.id);
+                              }
+                            }}
+                            style={{ background: "rgba(239, 68, 68, 0.1)", border: "none", color: "#ef4444", padding: "6px 10px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 700, cursor: "pointer" }}
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>
@@ -2680,7 +2697,7 @@ export default function AdminDashboardPage() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                     {[
                       { key: "showCompatibilityMatrix", label: "OEM Two-Wheeler Compatibility Matrix", desc: "Display quick brand picker for Hero, Honda, Bajaj, TVS, Yamaha, Enfield" },
-                      { key: "showBrandPillars", label: "Brand Pillars Spotlight (Nexcolle & FUJI)", desc: "Engineering legacy, battery specs and metallurgy breakdown" },
+                      { key: "showBrandPillars", label: "Brand Pillars Spotlight (Nexcolle Batteries)", desc: "Engineering legacy, battery specs and performance breakdown" },
                       { key: "showWholesaleSlabs", label: "Wholesale Garage Volume Slabs", desc: "Show 10+, 30+, 100+ units volume discount banners" },
                       { key: "showSupplyChainTrust", label: "Mechanic Supply Chain Trust Assurance", desc: "Show Japanese AC8A & VRLA warranty trust banner" },
                     ].map((sec) => (
@@ -3414,7 +3431,7 @@ export default function AdminDashboardPage() {
                           rows={2}
                           value={slideSubtitle}
                           onChange={(e) => setSlideSubtitle(e.target.value)}
-                          placeholder="e.g. Genuine Nexcolle™ high-CCA motorcycle batteries and FUJI™ precision engine components."
+                          placeholder="e.g. Genuine Nexcolle™ high-CCA motorcycle batteries engineered for extreme Indian weather."
                           style={{ width: "100%", padding: "10px 14px", backgroundColor: "#070a0f", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "10px", color: "#ffffff", fontSize: "0.88rem", outline: "none", resize: "vertical" }}
                         />
                       </div>
@@ -3546,6 +3563,11 @@ export default function AdminDashboardPage() {
                       </span>
                     )}
                     <span style={{ color: "#f8fafc" }}>{announcement.marqueeText || "Pan-India Logistics & Wholesale Supply"}</span>
+                    {announcement.offerNotice && (
+                      <span style={{ color: "var(--primary)", fontWeight: 700, fontSize: "0.82rem" }}>
+                        ● {announcement.offerNotice}
+                      </span>
+                    )}
                   </div>
                   <div style={{ color: "#94a3b8", fontSize: "0.78rem", display: "flex", gap: "12px" }}>
                     <span>📞 {announcement.phone || "+91 98765 43210"}</span>
@@ -3603,6 +3625,19 @@ export default function AdminDashboardPage() {
                       value={announcement.marqueeText}
                       onChange={(e) => setAnnouncement({ ...announcement, marqueeText: e.target.value })}
                       placeholder="e.g. Pan-India Logistics & Wholesale Supply for Verified Garages"
+                      style={{ width: "100%", backgroundColor: "rgba(255, 255, 255, 0.04)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "8px", padding: "10px 14px", color: "#ffffff", fontSize: "0.88rem" }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: "0.78rem", color: "#94a3b8", fontWeight: 700, display: "block", marginBottom: "4px" }}>
+                      Special Promo Notice (Highlighted promotional tag)
+                    </label>
+                    <input
+                      type="text"
+                      value={announcement.offerNotice || ""}
+                      onChange={(e) => setAnnouncement({ ...announcement, offerNotice: e.target.value })}
+                      placeholder="e.g. Flat 10% Wholesale rebate on orders above ₹10,000 with code GARAGE10"
                       style={{ width: "100%", backgroundColor: "rgba(255, 255, 255, 0.04)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "8px", padding: "10px 14px", color: "#ffffff", fontSize: "0.88rem" }}
                     />
                   </div>

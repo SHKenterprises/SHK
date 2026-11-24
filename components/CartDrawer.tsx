@@ -208,7 +208,7 @@ export function CartDrawer() {
               </div>
               <h4 style={{ color: "var(--text-main)", marginBottom: "6px" }}>Your cart is empty</h4>
               <p style={{ fontSize: "0.85rem", marginBottom: "20px" }}>
-                Add genuine Nexcolle batteries or FUJI engine spares to start an order.
+                Add genuine Nexcolle™ two-wheeler batteries to start an order.
               </p>
               <button
                 className="btn btn-primary btn-sm"
