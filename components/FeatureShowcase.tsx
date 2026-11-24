@@ -56,7 +56,6 @@ export function FeatureShowcase({ onSelectCategory }: FeatureShowcaseProps) {
             </p>
             <Link href="/products" className="btn btn-primary feature-showcase-btn">
               <span>View All Products</span>
-              <Icon name="arrow-right" style={{ width: "16px", height: "16px" }} />
             </Link>
           </div>
 

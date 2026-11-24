@@ -11,6 +11,7 @@ import { Icon } from "@/components/SvgSprite";
 import { ProductQuickView } from "@/components/ProductQuickView";
 import { QuoteModal } from "@/components/QuoteModal";
 import { PRODUCTS, Product } from "@/data/products";
+import { getProducts, getCategories, CategoryItem } from "@/lib/supabaseService";
 import { useCart } from "@/context/CartContext";
 
 function ProductsCatalogInner() {
@@ -20,6 +21,8 @@ function ProductsCatalogInner() {
   const initialBrand = searchParams.get("brand") || "all";
   const initialSearch = searchParams.get("search") || "";
 
+  const [productsList, setProductsList] = useState<Product[]>(PRODUCTS);
+  const [categoriesList, setCategoriesList] = useState<CategoryItem[]>([]);
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [selectedBrand, setSelectedBrand] = useState<"all" | "Nexcolle" | "FUJI">(
     initialBrand === "Nexcolle" || initialBrand === "FUJI" ? initialBrand : "all"
@@ -34,6 +37,19 @@ function ProductsCatalogInner() {
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
 
   useEffect(() => {
+    getProducts().then((data) => {
+      if (data && data.length > 0) {
+        setProductsList(data);
+      }
+    });
+    getCategories().then((cats) => {
+      if (cats && cats.length > 0) {
+        setCategoriesList(cats);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     const cat = searchParams.get("category");
     if (cat) setActiveCategory(cat);
     const br = searchParams.get("brand");
@@ -43,16 +59,27 @@ function ProductsCatalogInner() {
   }, [searchParams]);
 
   const categoryTabs = [
-    { id: "all", label: "All Spares", count: PRODUCTS.length },
-    { id: "battery", label: "Nexcolle Batteries", count: PRODUCTS.filter((p) => p.category === "battery").length },
-    { id: "piston", label: "Pistons & Kits", count: PRODUCTS.filter((p) => p.category === "piston").length },
-    { id: "liner", label: "Cylinder Liners", count: PRODUCTS.filter((p) => p.category === "liner").length },
-    { id: "valves", label: "Engine Valves", count: PRODUCTS.filter((p) => p.category === "valves").length },
-    { id: "gasket", label: "Gaskets & Sets", count: PRODUCTS.filter((p) => p.category === "gasket").length },
+    { id: "all", label: "All Spares", count: productsList.length },
+    ...(categoriesList.length > 0
+      ? categoriesList.map((c) => ({
+          id: c.slug || c.id,
+          label: c.name,
+          count: productsList.filter(
+            (p) =>
+              p.category?.toLowerCase() === (c.slug || c.id).toLowerCase() ||
+              p.category?.toLowerCase() === c.id.toLowerCase()
+          ).length,
+        }))
+      : [
+          { id: "battery", label: "Nexcolle Batteries", count: productsList.filter((p) => p.category === "battery").length },
+          { id: "piston", label: "Pistons & Kits", count: productsList.filter((p) => p.category === "piston").length },
+          { id: "liner", label: "Cylinder Liners", count: productsList.filter((p) => p.category === "liner").length },
+          { id: "valves", label: "Engine Valves", count: productsList.filter((p) => p.category === "valves").length },
+        ]),
   ];
 
   // Filter products
-  const filtered = PRODUCTS.filter((item) => {
+  const filtered = productsList.filter((item) => {
     const matchesCat = activeCategory === "all" || item.category === activeCategory;
     if (!matchesCat) return false;
 
@@ -330,7 +357,7 @@ function ProductsCatalogInner() {
             {/* Results Counter */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
               <div style={{ fontSize: "0.9rem", color: "#64748b" }}>
-                Showing <strong>{sorted.length}</strong> of <strong>{PRODUCTS.length}</strong> verified components
+                Showing <strong>{sorted.length}</strong> of <strong>{productsList.length}</strong> verified components
               </div>
               {(activeCategory !== "all" || selectedBrand !== "all" || searchQuery) && (
                 <button

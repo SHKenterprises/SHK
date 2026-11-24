@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Product } from "@/data/products";
+import { getCoupons } from "@/lib/supabaseService";
 
 export interface CartItem {
   product: Product;
@@ -16,27 +17,27 @@ export interface Coupon {
   description: string;
 }
 
-const VALID_COUPONS: Coupon[] = [
+const DEFAULT_COUPONS: Coupon[] = [
   {
-    code: "GARAGE10",
+    code: "BULK10",
     type: "percent",
     value: 10,
-    minSpend: 2000,
-    description: "10% off for verified garage orders over ₹2,000",
+    minSpend: 5000,
+    description: "10% Wholesale volume rebate for orders over ₹5,000",
   },
   {
     code: "SHKFIRST",
-    type: "fixed",
-    value: 150,
-    minSpend: 999,
-    description: "₹150 off on first purchase above ₹999",
+    type: "percent",
+    value: 10,
+    minSpend: 1000,
+    description: "10% Welcome credit for verified workshop on first order over ₹1,000",
   },
   {
-    code: "BULK20",
+    code: "GARAGE20",
     type: "percent",
     value: 20,
-    minSpend: 10000,
-    description: "20% off for bulk wholesale orders over ₹10,000",
+    minSpend: 15000,
+    description: "20% High-tier bulk discount for verified garages over ₹15,000",
   },
 ];
 
@@ -54,6 +55,7 @@ interface CartContextType {
   subtotal: number;
   discountAmount: number;
   appliedCoupon: Coupon | null;
+  availableCoupons: Coupon[];
   applyCoupon: (code: string) => { success: boolean; message: string };
   removeCoupon: () => void;
   shippingFee: number;
@@ -74,8 +76,63 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [activeCoupons, setActiveCoupons] = useState<Coupon[]>(DEFAULT_COUPONS);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
+
+  // Load active coupons dynamically from API & localStorage
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        const list = await getCoupons();
+        if (Array.isArray(list) && list.length > 0) {
+          const mapped: Coupon[] = list
+            .filter((c: any) => c.status === "Active")
+            .map((c: any) => ({
+              code: c.code,
+              type: c.discountType === "Flat" ? "fixed" : "percent",
+              value: Number(c.discountValue) || 10,
+              minSpend: Number(c.minOrder) || 0,
+              description: c.description || "",
+            }));
+          if (mapped.length > 0) {
+            setActiveCoupons(mapped);
+            try {
+              localStorage.setItem("shk_coupons_cache", JSON.stringify(mapped));
+            } catch {}
+          }
+        }
+      } catch (err) {
+        console.warn("CartContext fetch coupons error:", err);
+      }
+    };
+
+    // Load from cache first if present
+    try {
+      const cached = localStorage.getItem("shk_coupons_cache");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setActiveCoupons(parsed);
+        }
+      }
+    } catch {}
+
+    fetchCoupons();
+
+    const handleUpdate = () => {
+      fetchCoupons();
+    };
+
+    window.addEventListener("shk_coupons_updated", handleUpdate);
+    window.addEventListener("storage", (e) => {
+      if (e.key === "shk_coupons_updated") fetchCoupons();
+    });
+
+    return () => {
+      window.removeEventListener("shk_coupons_updated", handleUpdate);
+    };
+  }, []);
 
   // Load from localStorage
   useEffect(() => {
@@ -237,10 +294,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const applyCoupon = (code: string) => {
     const formatted = code.trim().toUpperCase();
-    const found = VALID_COUPONS.find((c) => c.code === formatted);
+    const found = activeCoupons.find((c) => c.code === formatted);
 
     if (!found) {
-      return { success: false, message: "Invalid promo code. Try 'GARAGE10' or 'SHKFIRST'." };
+      return { success: false, message: "Invalid or expired promo code." };
     }
 
     if (found.minSpend && subtotal < found.minSpend) {
@@ -285,6 +342,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         subtotal,
         discountAmount,
         appliedCoupon,
+        availableCoupons: activeCoupons,
         applyCoupon,
         removeCoupon,
         shippingFee,

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { saveUserProfile } from "@/lib/supabaseService";
 
 export interface User {
   name: string;
@@ -49,6 +50,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const parsed = JSON.parse(savedUser);
           if (parsed && typeof parsed === "object") {
             setUser(parsed);
+            if (parsed.email || parsed.phone) {
+              try {
+                const cleanPhone = (parsed.phone || "").replace(/\D/g, "");
+                const custId = `CUST-${cleanPhone ? cleanPhone.slice(-6) : Math.floor(Math.random() * 90000 + 10000)}`;
+                const newCustItem = {
+                  id: custId,
+                  name: parsed.name || "Trade Customer",
+                  garage: parsed.workshopName || (parsed.accountType === "workshop" ? "Authorized Workshop" : "Trade Partner Garage"),
+                  city: parsed.city || "Patna",
+                  state: parsed.state || "Bihar",
+                  phone: parsed.phone ? (parsed.phone.startsWith("+91") ? parsed.phone : `+91 ${parsed.phone}`) : "",
+                  email: parsed.email || "",
+                  tier: parsed.accountType === "workshop" ? "Gold Wholesale Partner" : "Retail Mechanic",
+                  ordersCount: 0,
+                  totalSpend: 0,
+                  verified: true,
+                  joinedDate: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+                };
+                const existing = JSON.parse(localStorage.getItem("shk_custom_customers") || "[]");
+                const filtered = existing.filter((c: any) => c.email !== parsed.email && c.phone !== parsed.phone);
+                localStorage.setItem("shk_custom_customers", JSON.stringify([newCustItem, ...filtered]));
+              } catch {}
+            }
           }
         } catch {
           localStorage.removeItem("shk_auth_user");
@@ -104,6 +128,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {
       // Ignore
     }
+
+    // Save profile to Supabase database
+    saveUserProfile(newUser).catch((err) => console.warn("Supabase profile sync:", err));
+
     setIsAuthModalOpen(false);
     return { success: true };
   };
@@ -117,6 +145,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch {
         // Ignore
       }
+
+      // Sync updated profile to Supabase
+      saveUserProfile(updated).catch((err) => console.warn("Supabase profile update:", err));
+
       return updated;
     });
   };

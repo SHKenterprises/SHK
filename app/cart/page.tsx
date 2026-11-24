@@ -19,6 +19,7 @@ export default function CartPage() {
     subtotal,
     discountAmount,
     appliedCoupon,
+    availableCoupons,
     applyCoupon,
     removeCoupon,
     shippingFee,
@@ -526,40 +527,29 @@ export default function CartPage() {
                         )}
 
                         {/* Fast Apply Pills */}
-                        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                          <button
-                            type="button"
-                            onClick={() => handleApplyCoupon("SHKFIRST")}
-                            style={{
-                              background: "rgba(249, 87, 22, 0.1)",
-                              border: "1px dashed rgba(249, 87, 22, 0.4)",
-                              color: "var(--primary-light)",
-                              borderRadius: "6px",
-                              padding: "3px 8px",
-                              fontSize: "0.72rem",
-                              cursor: "pointer",
-                              fontWeight: 600,
-                            }}
-                          >
-                            SHKFIRST (10% Off)
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleApplyCoupon("BULK10")}
-                            style={{
-                              background: "rgba(255, 255, 255, 0.05)",
-                              border: "1px dashed rgba(255, 255, 255, 0.2)",
-                              color: "#cbd5e1",
-                              borderRadius: "6px",
-                              padding: "3px 8px",
-                              fontSize: "0.72rem",
-                              cursor: "pointer",
-                              fontWeight: 600,
-                            }}
-                          >
-                            BULK10
-                          </button>
-                        </div>
+                        {availableCoupons && availableCoupons.length > 0 && (
+                          <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "4px" }}>
+                            {availableCoupons.slice(0, 3).map((c) => (
+                              <button
+                                key={c.code}
+                                type="button"
+                                onClick={() => handleApplyCoupon(c.code)}
+                                style={{
+                                  background: "rgba(249, 87, 22, 0.1)",
+                                  border: "1px dashed rgba(249, 87, 22, 0.4)",
+                                  color: "var(--primary-light)",
+                                  borderRadius: "6px",
+                                  padding: "3px 8px",
+                                  fontSize: "0.72rem",
+                                  cursor: "pointer",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                {c.code} ({c.type === "percent" ? `${c.value}% Off` : `₹${c.value} Flat`})
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

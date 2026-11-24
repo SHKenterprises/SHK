@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { submitReview, getProductReviews } from "@/lib/supabaseService";
 import { Icon } from "@/components/SvgSprite";
 import { TopBar } from "@/components/TopBar";
 import { Header } from "@/components/Header";
@@ -106,30 +108,87 @@ export function ProductPageClient({
     setQuoteModalOpen(true);
   };
 
-  // Sample verified garage reviews
-  const reviews = [
-    {
-      author: "Deepak Sharma",
-      garage: "Sharma Auto Works, Pune",
-      rating: 5,
-      date: "2 days ago",
-      text: "Fitted on our commercial delivery fleet of 8 Splendor bikes. High cranking torque and resting voltage holds at 12.8V even in cold mornings. 100% genuine factory sealed.",
-    },
-    {
-      author: "Manoj Kumar",
-      garage: "SpeedPoint Performance, Bengaluru",
-      rating: 5,
-      date: "1 week ago",
-      text: "Delivered in 36 hours via air cargo to our workshop. The wholesale slab discount saved us over ₹3,200 on our 20-unit box order. Highly recommended B2B distributor.",
-    },
-    {
-      author: "Vikram Rathi",
-      garage: "Rathi Motors & Spares, Jaipur",
-      rating: 5,
-      date: "2 weeks ago",
-      text: "Heavy-duty brass terminals and exact factory bolt-on fitment. Zero machining or spacer needed. Customers love the instant self-start.",
-    },
-  ];
+  const { user } = useAuth();
+
+  // Dynamic reviews state loaded live from Supabase (Only approved reviews appear here)
+  const [reviewsList, setReviewsList] = useState<
+    Array<{
+      author: string;
+      garage: string;
+      rating: number;
+      date: string;
+      text: string;
+    }>
+  >([]);
+
+  // Review submission state
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [revAuthor, setRevAuthor] = useState("");
+  const [revGarage, setRevGarage] = useState("");
+  const [revRating, setRevRating] = useState(5);
+  const [revComment, setRevComment] = useState("");
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+  const [reviewSubmittedSuccess, setReviewSubmittedSuccess] = useState(false);
+
+  // Fetch approved reviews from Supabase for this product
+  useEffect(() => {
+    if (product?.id) {
+      getProductReviews(product.id, product.slug).then((dbRevs) => {
+        if (dbRevs && dbRevs.length > 0) {
+          const mapped = dbRevs.map((r: any) => ({
+            author: r.author && r.author.includes("•") ? r.author.split("•")[0]?.trim() : (r.author || "Verified Buyer"),
+            garage: r.author && r.author.includes("•") ? r.author.split("•")[1]?.trim() : "Workshop Partner",
+            rating: Number(r.rating) || 5,
+            date: r.date || "Recently",
+            text: r.comment || "",
+          }));
+          setReviewsList(mapped);
+        } else {
+          setReviewsList([]);
+        }
+      });
+    }
+  }, [product?.id, product?.slug]);
+
+  const handleOpenReviewForm = () => {
+    if (!showReviewForm) {
+      if (user?.name && !revAuthor) setRevAuthor(user.name);
+      if (user?.workshopName && !revGarage) setRevGarage(user.workshopName);
+    }
+    setShowReviewForm(!showReviewForm);
+  };
+
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!revComment.trim()) return;
+
+    const authorName = revAuthor.trim() || user?.name || "Verified Garage Mechanic";
+    const garageName = revGarage.trim() || user?.workshopName || "Authorized Workshop";
+    const fullAuthor = garageName ? `${authorName} • ${garageName}` : authorName;
+
+    setIsSubmittingReview(true);
+    try {
+      await submitReview({
+        productId: product.id,
+        author: fullAuthor,
+        rating: revRating,
+        comment: revComment.trim(),
+        status: "Pending", // Must be approved by Admin first
+      });
+
+      // DO NOT add review to reviewsList directly! It must be approved by Admin in Admin Panel first
+      setReviewSubmittedSuccess(true);
+      setRevComment("");
+      setTimeout(() => {
+        setReviewSubmittedSuccess(false);
+        setShowReviewForm(false);
+      }, 5000);
+    } catch (err) {
+      console.error("Submit review error:", err);
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
 
   return (
     <>
@@ -445,7 +504,25 @@ export function ProductPageClient({
                     ))}
                   </div>
                   <strong style={{ fontSize: "0.95rem", color: "#090c13" }}>{product.rating}</strong>
-                  <span style={{ fontSize: "0.82rem", color: "#64748b" }}>({product.reviewsCount} verified reviews)</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveTab("reviews");
+                      const el = document.getElementById("product-tabs");
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      cursor: "pointer",
+                      fontSize: "0.82rem",
+                      color: "#64748b",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    ({reviewsList.length} verified reviews)
+                  </button>
                 </div>
                 <span style={{ color: "#cbd5e1" }}>•</span>
                 <span
@@ -1004,6 +1081,7 @@ export function ProductPageClient({
               overflow: "hidden",
               marginBottom: "48px",
             }}
+            id="product-tabs"
           >
             {/* Tabs Header Bar */}
             <div
@@ -1018,7 +1096,7 @@ export function ProductPageClient({
                 { id: "specs", label: "Technical Specifications", icon: "gear" },
                 { id: "fitment", label: `Compatible Bikes (${product.compatibleBikes.length})`, icon: "check-circle" },
                 { id: "installation", label: "Workshop Installation Guide", icon: "shield-check" },
-                { id: "reviews", label: `Verified Reviews (${product.reviewsCount})`, icon: "star" },
+                { id: "reviews", label: `Verified Reviews (${reviewsList.length})`, icon: "star" },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -1166,48 +1244,326 @@ export function ProductPageClient({
                     </p>
                   </div>
 
-                  {/* Rating Score Pill */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", background: "#fff5f0", padding: "10px 18px", borderRadius: "14px", border: "1px solid #ffd8c7" }}>
-                    <span style={{ fontSize: "2rem", fontWeight: 900, color: "var(--primary)" }}>{product.rating}</span>
-                    <div>
-                      <div style={{ display: "flex", color: "#f59e0b" }}>
-                        {[...Array(5)].map((_, i) => (
-                          <Icon key={i} name="star" style={{ width: "14px", height: "14px", fill: "#f59e0b" }} />
-                        ))}
+                  <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
+                    {/* Rating Score Pill */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px", background: "#fff5f0", padding: "10px 18px", borderRadius: "14px", border: "1px solid #ffd8c7" }}>
+                      <span style={{ fontSize: "2rem", fontWeight: 900, color: "var(--primary)" }}>{product.rating}</span>
+                      <div>
+                        <div style={{ display: "flex", color: "#f59e0b" }}>
+                          {[...Array(5)].map((_, i) => (
+                            <Icon key={i} name="star" style={{ width: "14px", height: "14px", fill: "#f59e0b" }} />
+                          ))}
+                        </div>
+                        <span style={{ fontSize: "0.78rem", color: "#64748b", fontWeight: 600 }}>{reviewsList.length} verified ratings</span>
                       </div>
-                      <span style={{ fontSize: "0.78rem", color: "#64748b", fontWeight: 600 }}>{product.reviewsCount} verified ratings</span>
                     </div>
+
+                    {/* Write a Review Button */}
+                    <button
+                      type="button"
+                      onClick={handleOpenReviewForm}
+                      style={{
+                        backgroundColor: showReviewForm ? "#f1f5f9" : "var(--primary)",
+                        color: showReviewForm ? "#0f172a" : "#ffffff",
+                        border: showReviewForm ? "1px solid #cbd5e1" : "none",
+                        padding: "11px 20px",
+                        borderRadius: "12px",
+                        fontWeight: 700,
+                        fontSize: "0.9rem",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        boxShadow: showReviewForm ? "none" : "0 4px 14px rgba(249, 87, 22, 0.3)",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      <Icon name="star" style={{ width: "15px", height: "15px", fill: showReviewForm ? "none" : "#ffffff" }} />
+                      <span>{showReviewForm ? "Close Review Form" : "Write a Review"}</span>
+                    </button>
                   </div>
                 </div>
 
+                {/* Interactive Review Form Card */}
+                {showReviewForm && (
+                  <div
+                    style={{
+                      background: "#ffffff",
+                      borderRadius: "16px",
+                      border: "2px solid #fed7aa",
+                      padding: "24px",
+                      marginBottom: "28px",
+                      boxShadow: "0 8px 24px rgba(249, 87, 22, 0.08)",
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "8px" }}>
+                      <div>
+                        <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "#0f172a" }}>
+                          Write a Verified Trade &amp; Workshop Review
+                        </h4>
+                        <p style={{ margin: "4px 0 0", fontSize: "0.82rem", color: "#64748b" }}>
+                          Share your experience with part fitment, cranking power, durability, or workshop satisfaction.
+                        </p>
+                      </div>
+                      {user ? (
+                        <span style={{ fontSize: "0.78rem", background: "#f0fdf4", color: "#16a34a", padding: "4px 10px", borderRadius: "8px", fontWeight: 700, border: "1px solid #bbf7d0" }}>
+                          Verified Trade Account: {user.name}
+                        </span>
+                      ) : null}
+                    </div>
+
+                    {reviewSubmittedSuccess && (
+                      <div
+                        style={{
+                          padding: "16px 20px",
+                          background: "#f0fdf4",
+                          border: "1px solid #86efac",
+                          borderRadius: "12px",
+                          color: "#15803d",
+                          fontWeight: 700,
+                          fontSize: "0.9rem",
+                          marginBottom: "20px",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                          <span style={{ fontSize: "1.2rem" }}>✓</span>
+                          <span>Review Successfully Submitted! / समीक्षा सबमिट हो गई है!</span>
+                        </div>
+                        <div style={{ fontSize: "0.82rem", color: "#166534", fontWeight: 500 }}>
+                          Aapka review Admin ke paas verification &amp; approval ke liye bhej diya gaya hai. Admin dwara approve hote hi yeh product page par live display hoga.
+                        </div>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleReviewSubmit}>
+                      {/* Rating Stars Selector */}
+                      <div style={{ marginBottom: "16px" }}>
+                        <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+                          Your Rating (1 to 5 Stars) *
+                        </label>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => setRevRating(star)}
+                              style={{
+                                background: "none",
+                                border: "none",
+                                cursor: "pointer",
+                                padding: "4px",
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                              title={`${star} Star`}
+                            >
+                              <Icon
+                                name="star"
+                                style={{
+                                  width: "28px",
+                                  height: "28px",
+                                  fill: star <= revRating ? "#f59e0b" : "#e2e8f0",
+                                  stroke: star <= revRating ? "#d97706" : "#cbd5e1",
+                                  strokeWidth: "1px",
+                                  transition: "transform 0.1s ease",
+                                }}
+                              />
+                            </button>
+                          ))}
+                          <span style={{ marginLeft: "10px", fontSize: "0.85rem", fontWeight: 700, color: "#f59e0b" }}>
+                            {revRating === 5 && "★★★★★ 5/5 - Exceptional OEM Grade"}
+                            {revRating === 4 && "★★★★☆ 4/5 - Very Good Performance"}
+                            {revRating === 3 && "★★★☆☆ 3/5 - Average Quality"}
+                            {revRating === 2 && "★★☆☆☆ 2/5 - Below Expectation"}
+                            {revRating === 1 && "★☆☆☆☆ 1/5 - Poor Fitment"}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Author Name and Garage row */}
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "16px" }}>
+                        <div>
+                          <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+                            Your Name / Mechanic Name *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={revAuthor}
+                            onChange={(e) => setRevAuthor(e.target.value)}
+                            placeholder={user?.name || "e.g. Md Irshad"}
+                            style={{
+                              width: "100%",
+                              padding: "10px 14px",
+                              borderRadius: "10px",
+                              border: "1px solid #cbd5e1",
+                              fontSize: "0.88rem",
+                              color: "#0f172a",
+                              outline: "none",
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+                            Garage / Workshop / City (Optional)
+                          </label>
+                          <input
+                            type="text"
+                            value={revGarage}
+                            onChange={(e) => setRevGarage(e.target.value)}
+                            placeholder={user?.workshopName || "e.g. Apex Moto Works, Patna"}
+                            style={{
+                              width: "100%",
+                              padding: "10px 14px",
+                              borderRadius: "10px",
+                              border: "1px solid #cbd5e1",
+                              fontSize: "0.88rem",
+                              color: "#0f172a",
+                              outline: "none",
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Review Comment / Textarea */}
+                      <div style={{ marginBottom: "18px" }}>
+                        <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+                          Your Review &amp; Comments *
+                        </label>
+                        <textarea
+                          required
+                          rows={4}
+                          value={revComment}
+                          onChange={(e) => setRevComment(e.target.value)}
+                          placeholder="Fitted on customer bikes, cold-cranking performance, metallurgy quality, delivery packaging, warranty support..."
+                          style={{
+                            width: "100%",
+                            padding: "12px 14px",
+                            borderRadius: "10px",
+                            border: "1px solid #cbd5e1",
+                            fontSize: "0.88rem",
+                            color: "#0f172a",
+                            outline: "none",
+                            resize: "vertical",
+                            fontFamily: "inherit",
+                          }}
+                        />
+                      </div>
+
+                      {/* Form Actions */}
+                      <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px" }}>
+                        <button
+                          type="button"
+                          onClick={() => setShowReviewForm(false)}
+                          style={{
+                            background: "transparent",
+                            border: "1px solid #cbd5e1",
+                            color: "#64748b",
+                            padding: "10px 18px",
+                            borderRadius: "10px",
+                            fontWeight: 600,
+                            fontSize: "0.88rem",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={isSubmittingReview || !revComment.trim()}
+                          style={{
+                            backgroundColor: "var(--primary)",
+                            color: "#ffffff",
+                            border: "none",
+                            padding: "10px 24px",
+                            borderRadius: "10px",
+                            fontWeight: 700,
+                            fontSize: "0.88rem",
+                            cursor: isSubmittingReview || !revComment.trim() ? "not-allowed" : "pointer",
+                            opacity: isSubmittingReview || !revComment.trim() ? 0.7 : 1,
+                            boxShadow: "0 4px 12px rgba(249, 87, 22, 0.3)",
+                          }}
+                        >
+                          {isSubmittingReview ? "Submitting..." : "Submit Review"}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                {/* Reviews List */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                  {reviews.map((rev, idx) => (
+                  {reviewsList.length === 0 ? (
                     <div
-                      key={idx}
                       style={{
-                        padding: "20px",
+                        textAlign: "center",
+                        padding: "48px 24px",
                         background: "#f8fafc",
                         borderRadius: "16px",
-                        border: "1px solid #edf0f5",
+                        border: "1px dashed #cbd5e1",
                       }}
                     >
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap" }}>
-                        <div>
-                          <strong style={{ fontSize: "0.95rem", color: "#090c13" }}>{rev.author}</strong>
-                          <span style={{ fontSize: "0.8rem", color: "#64748b", marginLeft: "8px" }}>• {rev.garage}</span>
-                        </div>
-                        <span style={{ fontSize: "0.76rem", color: "#94a3b8" }}>{rev.date}</span>
+                      <div style={{ fontSize: "2rem", color: "#f59e0b", marginBottom: "10px" }}>★</div>
+                      <div style={{ fontWeight: 800, color: "#0f172a", fontSize: "1.05rem" }}>
+                        No verified reviews yet for this product
                       </div>
-                      <div style={{ display: "flex", color: "#f59e0b", marginBottom: "8px" }}>
-                        {[...Array(rev.rating)].map((_, i) => (
-                          <Icon key={i} name="star" style={{ width: "13px", height: "13px", fill: "#f59e0b" }} />
-                        ))}
-                      </div>
-                      <p style={{ fontSize: "0.88rem", color: "#475569", lineHeight: 1.55 }}>
-                        &ldquo;{rev.text}&rdquo;
+                      <p style={{ fontSize: "0.86rem", color: "#64748b", margin: "6px auto 18px", maxWidth: "440px" }}>
+                        Aap pehle mechanic ya workshop owner banein jo is product ka review dein. Aapka review submit hone par Admin approval ke baad yahan live ho jayega.
                       </p>
+                      <button
+                        type="button"
+                        onClick={handleOpenReviewForm}
+                        style={{
+                          backgroundColor: "var(--primary)",
+                          color: "#ffffff",
+                          border: "none",
+                          padding: "10px 22px",
+                          borderRadius: "10px",
+                          fontWeight: 700,
+                          fontSize: "0.88rem",
+                          cursor: "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          boxShadow: "0 4px 14px rgba(249, 87, 22, 0.25)",
+                        }}
+                      >
+                        <Icon name="star" style={{ width: "15px", height: "15px", fill: "#ffffff" }} />
+                        Write the First Review
+                      </button>
                     </div>
-                  ))}
+                  ) : (
+                    reviewsList.map((rev, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          padding: "20px",
+                          background: "#f8fafc",
+                          borderRadius: "16px",
+                          border: "1px solid #edf0f5",
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap", gap: "8px" }}>
+                          <div>
+                            <strong style={{ fontSize: "0.95rem", color: "#090c13" }}>{rev.author}</strong>
+                            {rev.garage && (
+                              <span style={{ fontSize: "0.8rem", color: "#64748b", marginLeft: "8px" }}>• {rev.garage}</span>
+                            )}
+                          </div>
+                          <span style={{ fontSize: "0.76rem", color: "#94a3b8" }}>{rev.date}</span>
+                        </div>
+                        <div style={{ display: "flex", color: "#f59e0b", marginBottom: "8px" }}>
+                          {[...Array(rev.rating)].map((_, i) => (
+                            <Icon key={i} name="star" style={{ width: "13px", height: "13px", fill: "#f59e0b" }} />
+                          ))}
+                        </div>
+                        <p style={{ fontSize: "0.88rem", color: "#475569", lineHeight: 1.55 }}>
+                          &ldquo;{rev.text}&rdquo;
+                        </p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             )}

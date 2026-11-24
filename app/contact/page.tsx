@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { Icon } from "@/components/SvgSprite";
+import { createInquiry } from "@/lib/supabaseService";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -16,30 +17,38 @@ export default function ContactPage() {
   const [interest, setInterest] = useState("Nexcolle Batteries");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!name.trim() || !phone.trim()) return;
 
-    const formattedMessage =
-      "Hello S.H.K ENTERPRISES!%0A%0A*New Website Inquiry:*%0A" +
-      "- *Name/Garage:* " +
-      encodeURIComponent(name.trim()) +
-      "%0A" +
-      "- *Contact:* " +
-      encodeURIComponent(phone.trim()) +
-      (email ? "%0A- *Email:* " + encodeURIComponent(email.trim()) : "") +
-      "%0A" +
-      "- *Customer Type:* " +
-      encodeURIComponent(role) +
-      "%0A" +
-      "- *Product Interest:* " +
-      encodeURIComponent(interest) +
-      "%0A" +
-      "- *Message/Requirements:* " +
-      encodeURIComponent(message.trim() || "Catalog & Price List Request");
+    setIsSubmitting(true);
+    setErrorMsg(null);
 
-    window.open(`https://wa.me/919876543210?text=${formattedMessage}`, "_blank");
-    setSubmitted(true);
+    try {
+      // Store inquiry directly in Supabase Inquiries table
+      const res = await createInquiry({
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email.trim() || undefined,
+        customerType: role,
+        product: interest,
+        details: message.trim() || "Catalog & Price List Request",
+      });
+
+      if (!res.success && res.error) {
+        setErrorMsg(res.error);
+      } else {
+        setSubmitted(true);
+      }
+    } catch (err: any) {
+      console.error("Supabase contact inquiry sync error:", err);
+      setErrorMsg("Failed to submit inquiry to database. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -252,24 +261,48 @@ export default function ContactPage() {
                 Send Direct Message
               </h2>
               <p style={{ fontSize: "0.9rem", color: "var(--text-muted)", marginBottom: "24px" }}>
-                Fill out the form below. Our trade team will respond directly via WhatsApp and phone.
+                Fill out the form below. Your request will be directly submitted to our sales &amp; dispatch database.
               </p>
+
+              {errorMsg && (
+                <div style={{ padding: "12px 16px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "10px", color: "#b91c1c", fontSize: "0.85rem", fontWeight: 600, marginBottom: "16px" }}>
+                  ⚠ {errorMsg}
+                </div>
+              )}
 
               {submitted ? (
                 <div
                   style={{
-                    padding: "24px",
+                    padding: "36px 24px",
                     backgroundColor: "#ecfdf5",
                     border: "1px solid #10b981",
-                    borderRadius: "var(--radius-md)",
+                    borderRadius: "var(--radius-lg)",
                     textAlign: "center",
                   }}
                 >
-                  <Icon name="check" style={{ color: "#10b981", width: "32px", height: "32px", margin: "0 auto 10px auto" }} />
-                  <h4 style={{ color: "#065f46", margin: "0 0 6px 0" }}>Inquiry Transmitted!</h4>
-                  <p style={{ fontSize: "0.85rem", color: "#047857", margin: 0 }}>
-                    Our sales representative will follow up with you on WhatsApp within 30 minutes.
+                  <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#10b981", color: "#fff", display: "grid", placeItems: "center", margin: "0 auto 16px auto", fontSize: "1.6rem" }}>
+                    ✓
+                  </div>
+                  <h3 style={{ color: "#065f46", margin: "0 0 8px 0", fontSize: "1.3rem", fontWeight: 800 }}>
+                    Inquiry Saved in Database!
+                  </h3>
+                  <p style={{ fontSize: "0.9rem", color: "#047857", margin: "0 0 20px 0", lineHeight: 1.5 }}>
+                    Thank you, <strong>{name}</strong>. Your inquiry for <strong>{interest}</strong> has been saved directly to our system database. Our sales and wholesale dispatch team will review your requirements and reach out to you at <strong>{phone}</strong>.
                   </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setName("");
+                      setPhone("");
+                      setEmail("");
+                      setMessage("");
+                    }}
+                    className="btn btn-primary"
+                    style={{ padding: "10px 24px", fontSize: "0.9rem", fontWeight: 700 }}
+                  >
+                    Send Another Inquiry
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -398,10 +431,22 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     className="btn btn-primary"
-                    style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: "1rem" }}
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      padding: "14px",
+                      fontSize: "1rem",
+                      fontWeight: 800,
+                      opacity: isSubmitting ? 0.7 : 1,
+                      cursor: isSubmitting ? "not-allowed" : "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
                   >
-                    Send Inquiry via WhatsApp
+                    <span>{isSubmitting ? "Submitting to Database..." : "Submit B2B Inquiry"}</span>
                   </button>
                 </form>
               )}

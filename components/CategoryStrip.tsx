@@ -1,54 +1,56 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { getCategories } from "@/lib/supabaseService";
 
 interface CategoryStripProps {
   onSelectCategory: (category: string) => void;
 }
 
 export function CategoryStrip({ onSelectCategory }: CategoryStripProps) {
-  const categories = [
+  const defaultCategories = [
     {
       id: "battery",
-      title: "Two-Wheeler Batteries",
+      title: "Batteries & Power Systems",
       img: "/images/battery.jpg",
       alt: "Batteries",
     },
     {
       id: "piston",
-      title: "Pistons & Assemblies",
+      title: "Forged & Cast Pistons",
       img: "/images/piston-conrod.jpg",
       alt: "Pistons",
     },
     {
       id: "liner",
-      title: "Cylinder Liners & Sleeves",
+      title: "Centrifugal Cylinder Liners",
       img: "/images/cylinder-liner.jpg",
       alt: "Cylinder Liners",
     },
     {
       id: "valves",
-      title: "High-Heat Engine Valves",
+      title: "Precision Valve Sets",
       img: "/images/valves.jpg",
       alt: "Engine Valves",
     },
-    {
-      id: "gasket",
-      title: "Cylinder Head Gaskets",
-      img: "/images/head-gasket.jpg",
-      alt: "Head Gaskets",
-    },
-    {
-      id: "gasket",
-      title: "Full Overhaul Gasket Sets",
-      img: "/images/gasket-set.jpg",
-      alt: "Gasket Sets",
-    },
-    {
-      id: "gasket",
-      title: "Heat-Proof Gasket Cloth",
-      img: "/images/gasket-cloth.jpg",
-      alt: "Gasket Material",
-    },
   ];
+
+  const [categories, setCategories] = useState(defaultCategories);
+
+  useEffect(() => {
+    getCategories().then((dbCats) => {
+      if (dbCats && dbCats.length > 0) {
+        setCategories(
+          dbCats.map((c) => ({
+            id: c.slug || c.id,
+            title: c.name,
+            img: c.image || "/images/piston.png",
+            alt: c.name,
+          }))
+        );
+      }
+    });
+  }, []);
 
   return (
     <div className="cat-strip-section">

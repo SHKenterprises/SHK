@@ -1,0 +1,50 @@
+[
+  {
+    "id": "cpn-1795500592512",
+    "code": "HELLO",
+    "description": "hello",
+    "discountType": "Percentage",
+    "discountValue": 1,
+    "minOrder": 5,
+    "usageCount": 0,
+    "usageLimit": 2,
+    "expiryDate": "31 Dec 2026",
+    "status": "Active"
+  },
+  {
+    "id": "cpn_bulk",
+    "code": "BULK10",
+    "description": "10% Wholesale volume rebate for orders over ₹5,000",
+    "discountType": "Percentage",
+    "discountValue": 10,
+    "minOrder": 5000,
+    "usageCount": 14,
+    "usageLimit": 500,
+    "expiryDate": "31 Dec 2026",
+    "status": "Active"
+  },
+  {
+    "id": "cpn_first",
+    "code": "SHKFIRST",
+    "description": "10% Welcome credit for verified workshop on first order over ₹1,000",
+    "discountType": "Percentage",
+    "discountValue": 10,
+    "minOrder": 1000,
+    "usageCount": 84,
+    "usageLimit": 500,
+    "expiryDate": "31 Dec 2026",
+    "status": "Active"
+  },
+  {
+    "id": "cpn_garage",
+    "code": "GARAGE20",
+    "description": "20% High-tier bulk discount for verified garages over ₹15,000",
+    "discountType": "Percentage",
+    "discountValue": 20,
+    "minOrder": 15000,
+    "usageCount": 29,
+    "usageLimit": 200,
+    "expiryDate": "31 Dec 2026",
+    "status": "Active"
+  }
+]

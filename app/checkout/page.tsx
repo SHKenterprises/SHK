@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "@/components/SvgSprite";
+import { createOrder } from "@/lib/supabaseService";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -13,6 +14,9 @@ export default function CheckoutPage() {
     subtotal,
     discountAmount,
     appliedCoupon,
+    availableCoupons,
+    applyCoupon,
+    removeCoupon,
     shippingFee,
     grandTotal,
     clearCart,
@@ -32,6 +36,18 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<"upi" | "card" | "cod">("upi");
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [couponInput, setCouponInput] = useState("");
+  const [couponMsg, setCouponMsg] = useState<{ text: string; error: boolean } | null>(null);
+
+  const handleApplyCoupon = (codeToApply?: string) => {
+    const code = (codeToApply || couponInput).trim();
+    if (!code) return;
+    const res = applyCoupon(code);
+    setCouponMsg({ text: res.message, error: !res.success });
+    if (res.success) {
+      setCouponInput("");
+    }
+  };
 
   // Delivery calculation
   const expressFee = deliveryMethod === "express" ? 199 : 0;
@@ -80,6 +96,30 @@ export default function CheckoutPage() {
     } catch {
       // Ignore
     }
+
+    // Save directly to Supabase Database
+    createOrder({
+      orderNumber: orderId,
+      customerName: fullName,
+      customerEmail: email,
+      customerPhone: phone,
+      garageName,
+      gstin,
+      address,
+      city,
+      state,
+      pincode: pinCode,
+      deliveryMethod,
+      paymentMethod,
+      subtotal,
+      discount: discountAmount,
+      shippingFee: finalShippingFee,
+      total: finalTotal,
+      items,
+      notes,
+    }).catch((err) => {
+      console.warn("Supabase order error:", err);
+    });
 
     clearCart();
 
@@ -608,6 +648,157 @@ export default function CheckoutPage() {
                     </span>
                   </div>
                 ))}
+              </div>
+
+              {/* Promo Code & Trade Coupons Section */}
+              <div style={{ borderTop: "1px solid var(--light-border)", paddingTop: "14px", marginBottom: "14px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                  <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-main)", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <Icon name="tag" style={{ width: "14px", height: "14px", color: "var(--primary)" }} />
+                    <span>Apply Trade Coupon</span>
+                  </span>
+                  {availableCoupons && availableCoupons.length > 0 && !appliedCoupon && (
+                    <span style={{ fontSize: "0.72rem", color: "var(--accent-green)", fontWeight: 700 }}>
+                      {availableCoupons.length} available
+                    </span>
+                  )}
+                </div>
+
+                {appliedCoupon ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "8px 12px",
+                      borderRadius: "8px",
+                      backgroundColor: "rgba(16, 185, 129, 0.1)",
+                      border: "1px solid rgba(16, 185, 129, 0.3)",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <Icon name="check-circle" style={{ width: "16px", height: "16px", color: "#10b981" }} />
+                      <div>
+                        <div style={{ fontSize: "0.82rem", fontWeight: 800, color: "#10b981", letterSpacing: "0.03em" }}>
+                          {appliedCoupon.code}
+                        </div>
+                        <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>
+                          {appliedCoupon.type === "percent" ? `${appliedCoupon.value}% Trade Discount` : `₹${appliedCoupon.value} Flat Off`} Applied
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        removeCoupon();
+                        setCouponMsg(null);
+                      }}
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        color: "#ef4444",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        padding: "4px 8px",
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+                      <input
+                        type="text"
+                        placeholder="Enter coupon code"
+                        value={couponInput}
+                        onChange={(e) => {
+                          setCouponInput(e.target.value.toUpperCase());
+                          if (couponMsg) setCouponMsg(null);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleApplyCoupon();
+                          }
+                        }}
+                        style={{
+                          flex: 1,
+                          padding: "8px 12px",
+                          borderRadius: "8px",
+                          border: "1px solid var(--light-border)",
+                          fontSize: "0.85rem",
+                          backgroundColor: "#ffffff",
+                          textTransform: "uppercase",
+                          fontWeight: 700,
+                          letterSpacing: "0.05em",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleApplyCoupon()}
+                        className="btn btn-primary"
+                        style={{ padding: "8px 14px", fontSize: "0.82rem", fontWeight: 700, borderRadius: "8px" }}
+                      >
+                        Apply
+                      </button>
+                    </div>
+
+                    {couponMsg && (
+                      <div
+                        style={{
+                          fontSize: "0.75rem",
+                          color: couponMsg.error ? "#ef4444" : "#10b981",
+                          marginBottom: "8px",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {couponMsg.text}
+                      </div>
+                    )}
+
+                    {/* Available Fast Select Pills */}
+                    {availableCoupons && availableCoupons.length > 0 && (
+                      <div style={{ marginTop: "6px" }}>
+                        <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", marginBottom: "4px", fontWeight: 600 }}>
+                          Select a promo code to apply:
+                        </div>
+                        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                          {availableCoupons.map((c) => (
+                            <button
+                              key={c.code}
+                              type="button"
+                              onClick={() => handleApplyCoupon(c.code)}
+                              style={{
+                                background: "rgba(249, 87, 22, 0.08)",
+                                border: "1px dashed rgba(249, 87, 22, 0.4)",
+                                color: "var(--primary)",
+                                borderRadius: "6px",
+                                padding: "4px 8px",
+                                fontSize: "0.72rem",
+                                cursor: "pointer",
+                                fontWeight: 700,
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px",
+                                transition: "all 0.15s ease",
+                              }}
+                              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(249, 87, 22, 0.18)")}
+                              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "rgba(249, 87, 22, 0.08)")}
+                            >
+                              <span>{c.code}</span>
+                              <span style={{ color: "var(--text-muted)", fontWeight: 500 }}>
+                                ({c.type === "percent" ? `${c.value}% Off` : `₹${c.value}`}
+                                {c.minSpend ? ` • Min ₹${c.minSpend.toLocaleString("en-IN")}` : ""})
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Financial Calculation */}

@@ -1,16 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Icon } from "./SvgSprite";
 
-interface HeroProps {
-  onOpenQuote: (productName?: string) => void;
+export interface HeroSlide {
+  id: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  ctaText?: string;
+  ctaLink?: string;
+  image?: string;
+  status?: string;
+  order?: number;
 }
 
-export function Hero({ onOpenQuote }: HeroProps) {
+interface HeroProps {
+  onOpenQuote: (productName?: string) => void;
+  badge?: string;
+  headline?: string;
+  subtitle?: string;
+  slides?: HeroSlide[];
+}
+
+export function Hero({ onOpenQuote, badge, headline, subtitle, slides }: HeroProps) {
+  const activeSlides = (slides && slides.length > 0)
+    ? slides
+        .filter((s) => s.status === "Active")
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+    : [];
+
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+  // Auto-cycle through active slides if multiple exist
+  useEffect(() => {
+    if (activeSlides.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentSlideIndex((prev) => (prev + 1) % activeSlides.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [activeSlides.length]);
+
+  const currentSlide = activeSlides.length > 0 ? activeSlides[currentSlideIndex] : null;
+
+  const currentBadge = currentSlide ? currentSlide.badge : (badge || "OEM-GRADE ENGINEERING & SPARES");
+  const currentHeadline = currentSlide ? currentSlide.title : (headline || "Power Every Ride. Engineered to Last.");
+  const currentSubtitle = currentSlide ? currentSlide.subtitle : subtitle;
+  const currentCtaText = currentSlide?.ctaText || "Explore Catalog";
+  const currentCtaLink = currentSlide?.ctaLink || "/products";
+
   return (
     <section className="hero-indusfoto" id="home">
-      {/* CNC Gear Industrial Background from User Image */}
-      <div className="hero-indusfoto-bg" />
+      {/* Dynamic Background: Uses Active Slide Image or fallback to CNC Gear */}
+      <div
+        className="hero-indusfoto-bg"
+        style={
+          currentSlide?.image
+            ? {
+                backgroundImage: `url('${currentSlide.image}')`,
+                backgroundSize: "cover",
+                backgroundPosition: "right 18% center",
+                backgroundRepeat: "no-repeat",
+                transition: "background-image 0.5s ease-in-out",
+              }
+            : undefined
+        }
+      />
       {/* High-contrast smooth gradient overlay for crystal-clear readability */}
       <div className="hero-indusfoto-overlay" />
 
@@ -29,7 +83,7 @@ export function Hero({ onOpenQuote }: HeroProps) {
                   textTransform: "uppercase",
                 }}
               >
-                OEM-GRADE ENGINEERING &amp; SPARES
+                {currentBadge}
               </span>
             </div>
 
@@ -42,14 +96,24 @@ export function Hero({ onOpenQuote }: HeroProps) {
                 letterSpacing: "-0.03em",
                 color: "#ffffff",
                 marginBottom: "18px",
+                transition: "opacity 0.3s ease",
               }}
             >
-              Power Every Ride.
-              <br />
-              Engineered to{" "}
-              <span className="highlight" style={{ color: "var(--primary)" }}>
-                Last.
-              </span>
+              {(() => {
+                const parts = currentHeadline.trim().split(/\s+/);
+                if (parts.length > 1) {
+                  const lastWord = parts.pop();
+                  return (
+                    <>
+                      {parts.join(" ")}{" "}
+                      <span className="highlight" style={{ color: "var(--primary)" }}>
+                        {lastWord}
+                      </span>
+                    </>
+                  );
+                }
+                return currentHeadline;
+              })()}
             </h1>
 
             <p
@@ -60,14 +124,19 @@ export function Hero({ onOpenQuote }: HeroProps) {
                 lineHeight: 1.65,
                 maxWidth: "480px",
                 marginBottom: "28px",
+                transition: "opacity 0.3s ease",
               }}
             >
-              Genuine <strong>Nexcolle&trade;</strong> high-CCA motorcycle batteries and <strong>FUJI&trade;</strong> precision engine components. Built for extreme heat, heavy duty, and maximum reliability.
+              {currentSubtitle || (
+                <>
+                  Genuine <strong>Nexcolle&trade;</strong> high-CCA motorcycle batteries and <strong>FUJI&trade;</strong> precision engine components. Built for extreme heat, heavy duty, and maximum reliability.
+                </>
+              )}
             </p>
 
-            <div className="hero-buttons" style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "32px" }}>
+            <div className="hero-buttons" style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "28px", alignItems: "center" }}>
               <Link
-                href="/products"
+                href={currentCtaLink}
                 className="btn btn-primary"
                 style={{
                   borderRadius: "var(--radius-full)",
@@ -79,8 +148,33 @@ export function Hero({ onOpenQuote }: HeroProps) {
                   border: "none",
                 }}
               >
-                Explore Catalog
+                {currentCtaText}
               </Link>
+
+              {/* Carousel Slide Switcher Dots */}
+              {activeSlides.length > 1 && (
+                <div style={{ display: "inline-flex", gap: "8px", alignItems: "center", marginLeft: "10px" }}>
+                  {activeSlides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setCurrentSlideIndex(idx)}
+                      style={{
+                        width: currentSlideIndex === idx ? "26px" : "8px",
+                        height: "8px",
+                        borderRadius: "4px",
+                        backgroundColor: currentSlideIndex === idx ? "var(--primary)" : "rgba(255, 255, 255, 0.3)",
+                        border: "none",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        padding: 0,
+                      }}
+                      title={`Slide ${idx + 1}`}
+                      aria-label={`Slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Industrial Trust Bar: Clean inline icons, no boxy containers, no cutting border */}

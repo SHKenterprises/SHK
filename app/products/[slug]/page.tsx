@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PRODUCTS, Product } from "@/data/products";
+import { getProductBySlug, getProducts } from "@/lib/supabaseService";
 import { ProductPageClient } from "./ProductPageClient";
 
 interface Props {
@@ -10,14 +11,15 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return PRODUCTS.map((product) => ({
+  const allProds = await getProducts();
+  return allProds.map((product) => ({
     slug: product.slug,
   }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  const product = (await getProductBySlug(slug)) || PRODUCTS.find((p) => p.slug === slug);
 
   if (!product) {
     return {
@@ -45,17 +47,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  const product = (await getProductBySlug(slug)) || PRODUCTS.find((p) => p.slug === slug);
 
   if (!product) {
     notFound();
   }
 
+  const allProds = await getProducts();
+
   // Related products from same category or complementary, topped up to 4 items
-  const sameBrandOrCat = PRODUCTS.filter(
+  const sameBrandOrCat = allProds.filter(
     (p) => p.id !== product.id && (p.category === product.category || p.brand === product.brand)
   );
-  const otherPopular = PRODUCTS.filter(
+  const otherPopular = allProds.filter(
     (p) => p.id !== product.id && p.category !== product.category && p.brand !== product.brand
   );
   const relatedProducts = [...sameBrandOrCat, ...otherPopular].slice(0, 4);

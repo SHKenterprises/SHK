@@ -102,7 +102,7 @@ export function CompatibilityMatrix() {
                 href={`/products?search=${encodeURIComponent(b.searchKey)}`}
                 className="compat-card-link"
               >
-                <span>View {b.name} Spares &rarr;</span>
+                <span>View {b.name} Spares</span>
               </Link>
             </div>
           ))}

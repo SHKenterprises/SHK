@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Product, PRODUCTS } from "@/data/products";
+import { getProducts, getCategories, CategoryItem } from "@/lib/supabaseService";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "./SvgSprite";
 import { ProductQuickView } from "./ProductQuickView";
@@ -21,23 +22,44 @@ export function ProductCatalog({
 }: ProductCatalogProps) {
   const router = useRouter();
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
+  const [productsList, setProductsList] = useState<Product[]>(PRODUCTS);
+  const [categoriesList, setCategoriesList] = useState<CategoryItem[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBrand, setSelectedBrand] = useState<"all" | "Nexcolle" | "FUJI">("all");
   const [sortBy, setSortBy] = useState<"recommended" | "price-asc" | "price-desc" | "rating">("recommended");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [addedId, setAddedId] = useState<string | null>(null);
 
+  useEffect(() => {
+    getProducts().then((data) => {
+      if (data && data.length > 0) {
+        setProductsList(data);
+      }
+    });
+    getCategories().then((cats) => {
+      if (cats && cats.length > 0) {
+        setCategoriesList(cats);
+      }
+    });
+  }, []);
+
   const tabs = [
     { id: "all", label: "All Products" },
-    { id: "battery", label: "Batteries" },
-    { id: "piston", label: "Pistons & Assemblies" },
-    { id: "liner", label: "Cylinder Liners" },
-    { id: "valves", label: "Valves" },
-    { id: "gasket", label: "Gaskets & Kits" },
+    ...(categoriesList.length > 0
+      ? categoriesList.map((c) => ({
+          id: c.slug || c.id,
+          label: c.name,
+        }))
+      : [
+          { id: "battery", label: "Batteries" },
+          { id: "piston", label: "Pistons & Assemblies" },
+          { id: "liner", label: "Cylinder Liners" },
+          { id: "valves", label: "Valves" },
+        ]),
   ];
 
   // Filtering
-  const filtered = PRODUCTS.filter((item) => {
+  const filtered = productsList.filter((item) => {
     const matchesCat = activeCategory === "all" || item.category === activeCategory;
     if (!matchesCat) return false;
 

@@ -8,6 +8,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { Icon } from "@/components/SvgSprite";
+import { getOrderByNumber } from "@/lib/supabaseService";
 
 function TrackOrderContent() {
   const searchParams = useSearchParams();
@@ -28,32 +29,57 @@ function TrackOrderContent() {
       if (saved) {
         setOrderData(JSON.parse(saved));
       } else {
-        // Fallback demo data
-        setOrderData({
-          orderId: targetId,
-          date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
-          customer: {
-            fullName: "Ramesh Sharma",
-            garageName: "Apex Moto Care",
-            phone: "+91 98765 43210",
-          },
-          shipping: {
-            address: "Plot 12, Main Workshop Market",
-            city: "New Delhi",
-            state: "Delhi",
-            pinCode: "110001",
-            deliveryMethod: "express",
-          },
-          items: [
-            {
-              product: {
-                title: "Nexcolle Pro-Power 12V 4Ah Maintenance-Free Battery",
-                price: 1650,
-                image: "/images/battery.jpg",
+        // Query Supabase for real order
+        getOrderByNumber(targetId).then((dbOrder) => {
+          if (dbOrder) {
+            setOrderData({
+              orderId: dbOrder.order_number,
+              date: new Date(dbOrder.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+              customer: {
+                fullName: dbOrder.customer_name,
+                garageName: dbOrder.garage_name || "Valued Workshop",
+                phone: dbOrder.customer_phone,
               },
-              quantity: 2,
-            },
-          ],
+              shipping: {
+                address: dbOrder.address,
+                city: dbOrder.city,
+                state: dbOrder.state,
+                pinCode: dbOrder.pincode,
+                deliveryMethod: dbOrder.delivery_method,
+              },
+              status: dbOrder.status,
+              trackingNumber: dbOrder.tracking_number,
+              items: dbOrder.items || [],
+            });
+          } else {
+            // Fallback demo data
+            setOrderData({
+              orderId: targetId,
+              date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+              customer: {
+                fullName: "Ramesh Sharma",
+                garageName: "Apex Moto Care",
+                phone: "+91 98765 43210",
+              },
+              shipping: {
+                address: "Plot 12, Main Workshop Market",
+                city: "New Delhi",
+                state: "Delhi",
+                pinCode: "110001",
+                deliveryMethod: "express",
+              },
+              items: [
+                {
+                  product: {
+                    title: "Nexcolle Pro-Power 12V 4Ah Maintenance-Free Battery",
+                    price: 1650,
+                    image: "/images/battery.jpg",
+                  },
+                  quantity: 2,
+                },
+              ],
+            });
+          }
         });
       }
     } catch {
